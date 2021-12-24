@@ -1,0 +1,21 @@
+{
+  "name": "netflix",
+  "version": "1.0.0",
+  "description": "Let's copy netflix",
+  "main": "index.html",
+  "scripts": {
+    "start": "parcel index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xkrdudrlf/Netflix-Copy-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xkrdudrlf/Netflix-Copy-Project/issues"
+  },
+  "homepage": "https://github.com/xkrdudrlf/Netflix-Copy-Project#readme"
+}
