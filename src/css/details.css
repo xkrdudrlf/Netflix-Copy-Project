@@ -1,0 +1,50 @@
+.card {
+  display: flex;
+  flex-direction: row;
+  min-height: 400px;
+  width: 100%;
+  margin: 50px 200px 0 200px;
+  background-color: rgba(92, 91, 91, 0.384);
+  border-radius: 5px;
+}
+
+.card__image-container {
+  height: 100%;
+  width: 100%;
+  flex: 1;
+}
+
+.card__image {
+  height: 100%;
+  width: 100%;
+  object-fit: fill;
+}
+
+.card__content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  flex: 2.5;
+  font-size: 15px;
+  padding: 10px 20px;
+}
+
+.card__content__header {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.card__content__sub-header .header {
+  display: inline-block;
+  color: rgb(170, 170, 170);
+}
+
+.card__content__sub-header .content {
+  display: inline-block;
+}
+
+.card__content__body {
+  margin-top: 20px;
+  font-size: 16px;
+}

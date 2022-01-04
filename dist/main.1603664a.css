@@ -52,8 +52,17 @@
   cursor: pointer;
 }
 
+.navbar__tab:hover {
+  transition: 0.15s ease-in;
+  color: rgb(182, 179, 179);
+}
+
 .active {
   font-weight: bold;
+}
+
+.active:hover {
+  color: inherit;
 }
 
 .navbar__element {

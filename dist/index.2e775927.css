@@ -1,0 +1,348 @@
+@import "https://fonts.googleapis.com/css2?family=Martel+Sans:wght@400;600&display=swap";
+.navbar {
+  display: flex;
+  flex-direction: row;
+  height: 65px;
+  width: 100%;
+  padding: 0 50px;
+  position: fixed;
+  background-color: black;
+  z-index: 1;
+}
+
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.navbar__logo::before {
+  display: block;
+  content: "";
+  height: 60px;
+  width: 120px;
+  background-image: url("netflix.7f075c06.png");
+  background-size: 100% 100%;
+}
+
+.navbar__navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  font-size: 14px;
+  color: white;
+}
+
+.navbar__navigation__primary {
+  display: flex;
+}
+
+.navbar__navigation__secondary {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navbar__tab {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.navbar__tab:hover {
+  transition: 0.15s ease-in;
+  color: rgb(182, 179, 179);
+}
+
+.active {
+  font-weight: bold;
+  color: red;
+}
+
+.active:hover {
+  color: inherit;
+}
+
+.navbar__element {
+  font-size: 20px;
+  margin-left: 30px;
+  cursor: pointer;
+}
+
+.show-kids {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  font-size: 14px !important;
+  cursor: pointer;
+}
+
+/*
+  11:00
+              navbar__logo
+          / 
+  navbar  ㅡ  navbar__section ㅡ  navbar__section__left ㅡ  navbar__item
+                              \
+                                  navbar__section__right
+*/
+
+.lolomo {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding-left: 50px;
+}
+
+.lolomo__row {
+  display: flex;
+  flex-direction: column;
+  height: 160px;
+  width: 100%;
+  margin-top: 25px;
+}
+
+.lolomo__row__header {
+  font-weight: bold;
+  font-size: 20px;
+  padding-bottom: 10px;
+}
+
+.lolomo__row__carousel {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.carousel__nav {
+  display: flex;
+  position: absolute;
+  top: -20px;
+  right: 70px;
+}
+
+.carousel__indicator {
+  margin-left: 10px;
+  height: 5px;
+  width: 25px;
+  background-color: grey;
+}
+
+.carousel__nav .current {
+  background-color: white;
+}
+
+.carousel__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50px;
+  border: none;
+  font-size: 25px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.562);
+  cursor: pointer;
+  z-index: 2;
+  opacity: 0;
+  transition: all 0.3s ease-in;
+}
+
+.carousel__button:hover {
+  opacity: 1;
+}
+
+.carousel__button--left {
+  left: -50px;
+}
+
+.carousel__button--right {
+  right: 0px;
+}
+
+.carousel__track {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  list-style: none;
+}
+
+.carousel__slide {
+  display: flex;
+  position: relative;
+  height: 100%;
+  min-width: 220px;
+  margin-left: 10px;
+  background-color: lightcoral;
+  transition: left 0.3s ease-out, height 1s ease-in;
+  cursor: pointer;
+}
+
+.carousel__slide:first-of-type {
+  margin: 0;
+}
+
+.carousel__slide__modal {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  height: 280px;
+  width: 270px;
+  background-color: black;
+  border-radius: 5px;
+  z-index: 1;
+  transition: all 1s ease-in-out;
+
+  opacity: 0;
+  top: 0;
+  visibility: hidden;
+}
+
+.carousel__slide__modal__image-container {
+  height: 160px;
+  width: 100%;
+}
+
+.carousel__slide__modal__image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.carousel__slide__modal__body {
+  padding: 10px;
+  font-size: 12px;
+}
+
+.carousel__slide__modal__body .title {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.carousel__slide__modal__body .rating {
+  display: inline-block;
+  width: auto;
+  border: 0.5px rgba(245, 245, 245, 0.637) solid;
+  border-radius: 5px;
+  padding: 0px 6px;
+  margin: 5px 0;
+}
+
+.carousel__slide__modal__body .genre-list {
+  display: flex;
+}
+
+.carousel__slide__modal__body .genre-list .genre {
+  margin-left: 40px;
+}
+
+.carousel__slide__modal__body .genre-list .genre:first-child {
+  margin-left: 20px;
+}
+
+.carousel__image {
+  height: 100%;
+  width: 220px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.card {
+  display: flex;
+  flex-direction: row;
+  min-height: 400px;
+  width: 100%;
+  margin: 50px 200px 0 200px;
+  background-color: rgba(92, 91, 91, 0.384);
+  border-radius: 5px;
+}
+
+.card__image-container {
+  height: 100%;
+  width: 100%;
+  flex: 1;
+}
+
+.card__image {
+  height: 100%;
+  width: 100%;
+  object-fit: fill;
+}
+
+.card__content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  flex: 2.5;
+  font-size: 15px;
+  padding: 10px 20px;
+}
+
+.card__content__header {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.card__content__sub-header .header {
+  display: inline-block;
+  color: rgb(170, 170, 170);
+}
+
+.card__content__sub-header .content {
+  display: inline-block;
+}
+
+.card__content__body {
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.main {
+  display: flex;
+  color: white;
+  height: 100%;
+  padding-top: 65px;
+  padding-bottom: 50px;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  color: white;
+  height: 100px;
+  margin-bottom: 10px;
+}
+.attribution-logo {
+  margin-left: 10px;
+  height: 30px;
+  width: 200px;
+  border-radius: 3px;
+  background-color: white;
+  padding: 2px 8px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Martel Sans", sans-serif;
+}
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: black;
+  overflow: hidden;
+}
+
+/*# sourceMappingURL=index.2e775927.css.map */

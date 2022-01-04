@@ -1,0 +1,21 @@
+.lolomo {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding-left: 50px;
+}
+
+.lolomo__row {
+  display: flex;
+  flex-direction: column;
+  height: 160px;
+  width: 100%;
+  margin-top: 25px;
+}
+
+.lolomo__row__header {
+  font-weight: bold;
+  font-size: 20px;
+  padding-bottom: 10px;
+}

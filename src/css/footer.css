@@ -1,0 +1,17 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  color: white;
+  height: 100px;
+  margin-bottom: 10px;
+}
+.attribution-logo {
+  margin-left: 10px;
+  height: 30px;
+  width: 200px;
+  border-radius: 3px;
+  background-color: white;
+  padding: 2px 8px;
+}

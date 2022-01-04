@@ -1,11 +1,12 @@
 .navbar {
-  /* background-color: transparent; */
-  background-color: black;
   display: flex;
   flex-direction: row;
   height: 65px;
   width: 100%;
   padding: 0 50px;
+  position: fixed;
+  background-color: black;
+  z-index: 1;
 }
 
 .navbar__logo {
@@ -52,8 +53,18 @@
   cursor: pointer;
 }
 
+.navbar__tab:hover {
+  transition: 0.15s ease-in;
+  color: rgb(182, 179, 179);
+}
+
 .active {
   font-weight: bold;
+  color: red;
+}
+
+.active:hover {
+  color: inherit;
 }
 
 .navbar__element {

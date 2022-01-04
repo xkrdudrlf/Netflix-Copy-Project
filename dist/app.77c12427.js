@@ -218,7 +218,11 @@ var NavbarView = /*#__PURE__*/function (_View) {
     value: function addHandlerClickNavigationLogo(handler) {
       this._currentElement.addEventListener("click", function (e) {
         if (!e.target.classList.contains("navbar__logo")) return;
-        handler("Home");
+        var homeTab = document.querySelector(".navbar__tab");
+        homeTab.classList.add("active");
+        var prevActiveTab = handler(homeTab);
+        if (!prevActiveTab || prevActiveTab === homeTab) return;
+        prevActiveTab.classList.remove("active");
       });
     }
   }, {
@@ -295,8 +299,6 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 /*
   1. activeTab needs to be managed by a model
   2. link it with logo click
@@ -310,35 +312,21 @@ var NavbarNavigationPrimaryView = /*#__PURE__*/function (_View) {
   var _super = _createSuper(NavbarNavigationPrimaryView);
 
   function NavbarNavigationPrimaryView() {
-    var _this;
-
     _classCallCheck(this, NavbarNavigationPrimaryView);
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _super.call.apply(_super, [this].concat(args));
-
-    _defineProperty(_assertThisInitialized(_this), "_selectedTab", void 0);
-
-    return _this;
+    return _super.apply(this, arguments);
   }
 
   _createClass(NavbarNavigationPrimaryView, [{
     key: "addHandlerClickNavigationTab",
     value: function addHandlerClickNavigationTab(handler) {
-      var _this2 = this;
-
       this._currentElement.addEventListener("click", function (e) {
         if (!e.target.classList.contains("navbar__tab")) return;
-        e.stopPropagation();
-        if (_this2._selectedTab) _this2._selectedTab.classList.remove("active");
-        _this2._selectedTab = e.target;
-
-        _this2._selectedTab.classList.add("active");
-
-        handler(_this2._selectedTab.textContent);
+        var currActiveTab = e.target;
+        currActiveTab.classList.add("active");
+        var prevActiveTab = handler(currActiveTab);
+        if (prevActiveTab === currActiveTab) return;
+        prevActiveTab.classList.remove("active");
       });
     }
   }, {
@@ -350,7 +338,7 @@ var NavbarNavigationPrimaryView = /*#__PURE__*/function (_View) {
 
       this._currentElement.insertAdjacentElement("beforeend", tab);
 
-      if (active) this._selectedTab = tab;
+      return tab;
     }
   }, {
     key: "_generateElement",
@@ -437,11 +425,19 @@ exports.default = NavbarNavigationSecondaryView;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.state = void 0;
+exports.updateActiveTab = exports.state = void 0;
 var state = {
   activeTab: undefined
 };
 exports.state = state;
+
+var updateActiveTab = function updateActiveTab(activeTab) {
+  var prevActiveTab = state.activeTab;
+  state.activeTab = activeTab;
+  return prevActiveTab;
+};
+
+exports.updateActiveTab = updateActiveTab;
 },{}],"src/js/controllers/navbarController.js":[function(require,module,exports) {
 "use strict";
 
@@ -456,7 +452,7 @@ var _NavbarNavigationPrimaryView = _interopRequireDefault(require("../views/Navb
 
 var _NavbarNavigationSecondaryView = _interopRequireDefault(require("../views/NavbarNavigationSecondaryView"));
 
-var NavbarModel = _interopRequireWildcard(require("../models/navbarModel"));
+var navbarModel = _interopRequireWildcard(require("../models/navbarModel"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -477,23 +473,31 @@ var render = function render(pathname) {
   navbarNavigationPrimary.render();
   var tabs = ["Home", "TV Shows", "Movies", "New & popular", "My List"];
   tabs.forEach(function (tab) {
-    if (pathname === tab) navbarNavigationPrimary.addTab(tab, true);else navbarNavigationPrimary.addTab(tab);
+    if (pathname === tab) {
+      var activeTab = navbarNavigationPrimary.addTab(tab, true);
+      navbarModel.updateActiveTab(activeTab);
+    } else {
+      navbarNavigationPrimary.addTab(tab);
+    }
   }); // NavbarNavigationSecondary
 
   navbarNavigationSecondary = new _NavbarNavigationSecondaryView.default(document.querySelector(".navbar__navigation"));
   navbarNavigationSecondary.render();
 };
 
-var controlClickNavigationTab = function controlClickNavigationTab(tabContent) {
+var controlClickNavigationTab = function controlClickNavigationTab(activeTab) {
   // 1. Change the URL
-  var nextURL = "".concat(document.location.hash, "/").concat(tabContent);
-  var nextTitle = "".concat(tabContent, " - Netflix");
+  var nextURL = "".concat(document.location.hash, "/").concat(activeTab.textContent);
+  var nextTitle = "".concat(activeTab.textContent, " - Netflix");
   var nextState = {
     additionalInformation: "Updated the URL with JS"
   };
   window.history.pushState(nextState, nextTitle, nextURL); // 2. Change the Page Title
 
-  document.title = nextTitle;
+  document.title = nextTitle; // 3. Update activeTab state
+
+  var prevActiveTab = navbarModel.updateActiveTab(activeTab);
+  return prevActiveTab;
 };
 
 function init(pathname) {
@@ -507,20 +511,108 @@ function init(pathname) {
   1. Implement Basic Route Logic with navigation tabs
   2. Implement Dynamic css effect (hover, dropdown etc)
 */
-},{"../views/NavbarView":"src/js/views/NavbarView.js","../views/NavbarNavigationPrimaryView":"src/js/views/NavbarNavigationPrimaryView.js","../views/NavbarNavigationSecondaryView":"src/js/views/NavbarNavigationSecondaryView.js","../models/navbarModel":"src/js/models/navbarModel.js"}],"src/js/app.js":[function(require,module,exports) {
+},{"../views/NavbarView":"src/js/views/NavbarView.js","../views/NavbarNavigationPrimaryView":"src/js/views/NavbarNavigationPrimaryView.js","../views/NavbarNavigationSecondaryView":"src/js/views/NavbarNavigationSecondaryView.js","../models/navbarModel":"src/js/models/navbarModel.js"}],"src/js/views/MainView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _View2 = _interopRequireDefault(require("./View"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var MainView = /*#__PURE__*/function (_View) {
+  _inherits(MainView, _View);
+
+  var _super = _createSuper(MainView);
+
+  function MainView() {
+    _classCallCheck(this, MainView);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(MainView, [{
+    key: "_generateElement",
+    value: function _generateElement() {
+      var main = document.createElement("main");
+      main.className = "main";
+      return main;
+    }
+  }]);
+
+  return MainView;
+}(_View2.default);
+
+exports.default = MainView;
+},{"./View":"src/js/views/View.js"}],"src/js/controllers/mainController.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = init;
+
+var _MainView = _interopRequireDefault(require("../views/MainView"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var main;
+
+var render = function render() {
+  main = new _MainView.default(document.querySelector(".app"));
+  main.render();
+};
+
+function init() {
+  render();
+}
+},{"../views/MainView":"src/js/views/MainView.js"}],"src/js/app.js":[function(require,module,exports) {
 "use strict";
 
 var _navbarController = _interopRequireDefault(require("./controllers/navbarController"));
+
+var _mainController = _interopRequireDefault(require("./controllers/mainController"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 if (window.location.pathname === "/") {
   window.location.replace("/Home");
 }
+/*
+  App Level Model needed
+    to reflect the changes from "navbar" to "main"
+*/
+
 
 var pathname = decodeURI(document.location.pathname.split("/")[1]);
 (0, _navbarController.default)(pathname);
-},{"./controllers/navbarController":"src/js/controllers/navbarController.js"}],"../../.nvm/versions/node/v14.17.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+(0, _mainController.default)();
+},{"./controllers/navbarController":"src/js/controllers/navbarController.js","./controllers/mainController":"src/js/controllers/mainController.js"}],"../../.nvm/versions/node/v14.17.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -548,7 +640,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35667" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37159" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
