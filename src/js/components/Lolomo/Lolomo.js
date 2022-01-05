@@ -14,12 +14,19 @@ export default class Lolomo extends Component {
   render() {
     this.$currElement.innerHTML = "";
 
-    this.renderLolomoRows();
+    const [categories, genre] = this.getCategoriesAndGenre();
+
+    categories.forEach((category) => {
+      new LolomoRow({
+        parentElement: this.$currElement,
+        state: { genre, category },
+      });
+    });
 
     this.$parentElement.appendChild(this.$currElement);
   }
 
-  renderLolomoRows() {
+  getCategoriesAndGenre() {
     let categories, genre;
     switch (this.$state.activeTab) {
       case "Home":
@@ -42,11 +49,6 @@ export default class Lolomo extends Component {
         break;
     }
 
-    categories.forEach((category) => {
-      new LolomoRow({
-        parentElement: this.$currElement,
-        state: { genre, category },
-      });
-    });
+    return [categories, genre];
   }
 }

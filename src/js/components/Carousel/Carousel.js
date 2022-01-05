@@ -2,30 +2,43 @@ import * as config from "../../config";
 import * as utils from "../../utils";
 
 import Component from "../Component/Component";
+import CarouselButton from "./CarouselButton";
 import CarouselSlide from "./CarouselSlide";
+import CarouselTrack from "./CarouselTrack";
 
 export default class Carousel extends Component {
   constructor(componentInfo) {
     super(componentInfo);
 
     this.$currElement = document.createElement("div");
-    this.$currElement.className = "lolomo__row__carousel";
+    this.$currElement.className = `${this.$state.className}`;
 
     this.render();
+
+    this.addHandlerCarouselButtonClick();
+    this.addHandlerCarouselSlideHover();
+    this.addHandlerCarouselSlideClick();
   }
 
   render() {
     this.$currElement.innerHTML = "";
 
-    this.renderButton("left");
-    this.renderButton("right");
-    this.renderTrack();
+    new CarouselButton({
+      parentElement: this.$currElement,
+      state: { direction: "left" },
+    });
+
+    new CarouselButton({
+      parentElement: this.$currElement,
+      state: { direction: "right" },
+    });
+
+    new CarouselTrack({
+      parentElement: this.$currElement,
+      state: { slidesData: this.$state.slidesData },
+    });
 
     this.$parentElement.appendChild(this.$currElement);
-
-    this.addHandlerCarouselButtonClick();
-    this.addHandlerCarouselSlideHover();
-    this.addHandlerCarouselSlideClick();
   }
 
   addHandlerCarouselButtonClick() {
@@ -35,7 +48,6 @@ export default class Carousel extends Component {
 
       if (carouselBtn.classList.contains("carousel__button--left")) {
         this.moveSlides("left");
-        console.log("left");
       } else {
         this.moveSlides("right");
       }
@@ -111,43 +123,5 @@ export default class Carousel extends Component {
       const currWidth = slide.style.left.split("px")[0];
       slide.style.left = `${Number(currWidth) + Number(moveWidth)}px`;
     });
-  }
-
-  renderButton(direction) {
-    const button = document.createElement("button");
-    button.className = `carousel__button carousel__button--${direction}`;
-
-    const arrowIcon = document.createElement("i");
-    arrowIcon.className = `fas fa-chevron-${direction}`;
-    button.appendChild(arrowIcon);
-
-    this.$currElement.appendChild(button);
-  }
-
-  renderTrack() {
-    const track = document.createElement("ul");
-    track.className = "carousel__track";
-
-    this.$state.data.results.forEach((result) => {
-      if (result.backdrop_path) {
-        new CarouselSlide({ parentElement: track, state: { data: result } });
-      }
-    });
-
-    this.$currElement.appendChild(track);
-  }
-
-  renderTrackSlide(track, result) {
-    if (!result.backdrop_path) return;
-    const slide = `
-      <li class="carousel__slide" data-id="${result.id}">
-        <img
-          class="carousel__image"
-          src="${config.THE_MOVIE_DB_IMAGE_URL}/${result.backdrop_path}"
-          alt="poster-img"
-        />
-      </li>
-    `;
-    track.insertAdjacentHTML("beforeend", slide);
   }
 }

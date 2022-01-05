@@ -13,6 +13,7 @@ export default class Navbar extends Component {
     this.render();
 
     this.addHandlerNavbarTabClick();
+    this.addHandlerTurnoffActiveTab();
   }
 
   render() {
@@ -24,8 +25,6 @@ export default class Navbar extends Component {
     this.$parentElement.appendChild(this.$currElement);
 
     this.toggleNavbarTabActive();
-
-    this.addHandlerTurnoffActiveTab();
   }
 
   addHandlerTurnoffActiveTab() {
@@ -36,7 +35,7 @@ export default class Navbar extends Component {
   }
 
   setState(newState) {
-    this.$state = { ...this.$state, ...newState };
+    this.$state = newState;
   }
 
   toggleNavbarTabActive() {
@@ -59,7 +58,6 @@ export default class Navbar extends Component {
       if (this.$state.activeTab === target) return;
 
       this.toggleNavbarTabActive();
-      this.setState({ activeTab: target.textContent });
 
       const nextURL = `/${target.textContent}`;
       const nextTitle = `${target.textContent} - Netflix`;

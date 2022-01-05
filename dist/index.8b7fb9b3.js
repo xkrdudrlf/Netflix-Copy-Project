@@ -488,7 +488,6 @@ class App extends _componentDefault.default {
         this.$currElement.innerHTML = "";
         if (window.location.pathname === "/") window.location.replace("/Home");
         const activeTab = decodeURI(location.pathname.split("/")[1]);
-        const content = activeTab === "tv" || activeTab === "movie" ? "details" : "lolomo";
         new _navbarDefault.default({
             parentElement: this.$currElement,
             state: {
@@ -499,7 +498,7 @@ class App extends _componentDefault.default {
             parentElement: this.$currElement,
             state: {
                 activeTab,
-                content
+                content: activeTab === "tv" || activeTab === "movie" ? "details" : "lolomo"
             }
         });
         new _footerDefault.default({
@@ -579,6 +578,7 @@ class Main extends _componentDefault.default {
         this.$currElement = document.createElement("main");
         this.$currElement.className = "main";
         this.render();
+        this.addHandlerRenderDetails();
     }
     render(update = false) {
         this.$currElement.innerHTML = "";
@@ -590,7 +590,6 @@ class Main extends _componentDefault.default {
             state: this.$state
         });
         if (!update) this.$parentElement.appendChild(this.$currElement);
-        this.addHandlerRenderDetails();
     }
     addHandlerRenderDetails() {
         [
@@ -622,10 +621,19 @@ class Lolomo extends _componentDefault.default {
     }
     render() {
         this.$currElement.innerHTML = "";
-        this.renderLolomoRows();
+        const [categories, genre] = this.getCategoriesAndGenre();
+        categories.forEach((category)=>{
+            new _lolomoRowDefault.default({
+                parentElement: this.$currElement,
+                state: {
+                    genre,
+                    category
+                }
+            });
+        });
         this.$parentElement.appendChild(this.$currElement);
     }
-    renderLolomoRows() {
+    getCategoriesAndGenre() {
         let categories, genre;
         switch(this.$state.activeTab){
             case "Home":
@@ -665,15 +673,10 @@ class Lolomo extends _componentDefault.default {
             case "My List":
                 break;
         }
-        categories.forEach((category)=>{
-            new _lolomoRowDefault.default({
-                parentElement: this.$currElement,
-                state: {
-                    genre,
-                    category
-                }
-            });
-        });
+        return [
+            categories,
+            genre
+        ];
     }
 }
 exports.default = Lolomo;
@@ -686,6 +689,10 @@ var _carousel = require("../Carousel/Carousel");
 var _carouselDefault = parcelHelpers.interopDefault(_carousel);
 var _component = require("../Component/Component");
 var _componentDefault = parcelHelpers.interopDefault(_component);
+var _lolomoRowCarousel = require("./LolomoRowCarousel");
+var _lolomoRowCarouselDefault = parcelHelpers.interopDefault(_lolomoRowCarousel);
+var _lolomoRowHeader = require("./LolomoRowHeader");
+var _lolomoRowHeaderDefault = parcelHelpers.interopDefault(_lolomoRowHeader);
 class LolomoRow extends _componentDefault.default {
     $category;
     constructor(componentInfo){
@@ -696,62 +703,24 @@ class LolomoRow extends _componentDefault.default {
     }
     render() {
         this.$currElement.innerHTML = "";
-        this.renderHeader();
-        this.renderCarousel();
-        this.$parentElement.appendChild(this.$currElement);
-    }
-    renderHeader() {
-        const header = document.createElement("div");
-        header.className = "lolomo__row__header";
-        header.textContent = _utils.capitalizeFirstCharacter(this.$state.category).replace(/_/g, " ");
-        this.$currElement.appendChild(header);
-    }
-    async renderCarousel() {
-        let data = {
-        };
-        let requestURL = "";
-        try {
-            switch(this.$state.category){
-                case "trend":
-                    requestURL = `/trending/${this.$state.genre}/day`;
-                    data = await _utils.request(requestURL);
-                    break;
-                case "popular":
-                case "top_rated":
-                    if (this.$state.genre === "all") {
-                        let movieData = await _utils.request(`/movie/${this.$state.category}`);
-                        let tvData = await _utils.request(`/tv/${this.$state.category}`);
-                        movieData = movieData.results;
-                        tvData = tvData.results;
-                        data.results = [];
-                        for(let i = 0; i < 10; ++i)data.results.push(movieData[i], tvData[i]);
-                        break;
-                    }
-                    requestURL = `/${this.$state.genre}/${this.$state.category}`;
-                    data = await _utils.request(requestURL);
-                    break;
-                case "upcoming":
-                case "now_playing":
-                    requestURL = `/movie/${this.$state.category}`;
-                    data = await _utils.request(requestURL);
-                    break;
+        new _lolomoRowHeaderDefault.default({
+            parentElement: this.$currElement,
+            state: {
+                ...this.$state
             }
-            new _carouselDefault.default({
-                parentElement: this.$currElement,
-                state: {
-                    ...this.$state,
-                    data
-                }
-            });
-        } catch (e) {
-            console.log(e.message);
-            console.log(`Failed to retrieve data from "${requestURL}"`);
-        }
+        });
+        new _lolomoRowCarouselDefault.default({
+            parentElement: this.$currElement,
+            state: {
+                ...this.$state
+            }
+        });
+        this.$parentElement.appendChild(this.$currElement);
     }
 }
 exports.default = LolomoRow;
 
-},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../utils":"fIYUT","../Carousel/Carousel":"goTYN"}],"fIYUT":[function(require,module,exports) {
+},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../utils":"fIYUT","../Carousel/Carousel":"goTYN","./LolomoRowCarousel":"29JFq","./LolomoRowHeader":"6wc11"}],"fIYUT":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "pushState", ()=>pushState
@@ -761,8 +730,6 @@ parcelHelpers.export(exports, "emitEvent", ()=>emitEvent
 parcelHelpers.export(exports, "request", ()=>request
 );
 parcelHelpers.export(exports, "capitalizeFirstCharacter", ()=>capitalizeFirstCharacter
-);
-parcelHelpers.export(exports, "getGenre", ()=>getGenre
 );
 var _config = require("./config");
 const pushState = (state, title, url, target, bubbles = true)=>{
@@ -789,9 +756,6 @@ const request = async (url, options = {
 };
 const capitalizeFirstCharacter = (str)=>{
     return str.charAt(0).toUpperCase() + str.slice(1);
-};
-const getGenre = (data)=>{
-    return data.original_title ? "movie" : "tv";
 };
 
 },{"./config":"6V52N","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"6V52N":[function(require,module,exports) {
@@ -848,33 +812,50 @@ var _config = require("../../config");
 var _utils = require("../../utils");
 var _component = require("../Component/Component");
 var _componentDefault = parcelHelpers.interopDefault(_component);
+var _carouselButton = require("./CarouselButton");
+var _carouselButtonDefault = parcelHelpers.interopDefault(_carouselButton);
 var _carouselSlide = require("./CarouselSlide");
 var _carouselSlideDefault = parcelHelpers.interopDefault(_carouselSlide);
+var _carouselTrack = require("./CarouselTrack");
+var _carouselTrackDefault = parcelHelpers.interopDefault(_carouselTrack);
 class Carousel extends _componentDefault.default {
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = document.createElement("div");
-        this.$currElement.className = "lolomo__row__carousel";
+        this.$currElement.className = `${this.$state.className}`;
         this.render();
-    }
-    render() {
-        this.$currElement.innerHTML = "";
-        this.renderButton("left");
-        this.renderButton("right");
-        this.renderTrack();
-        this.$parentElement.appendChild(this.$currElement);
         this.addHandlerCarouselButtonClick();
         this.addHandlerCarouselSlideHover();
         this.addHandlerCarouselSlideClick();
+    }
+    render() {
+        this.$currElement.innerHTML = "";
+        new _carouselButtonDefault.default({
+            parentElement: this.$currElement,
+            state: {
+                direction: "left"
+            }
+        });
+        new _carouselButtonDefault.default({
+            parentElement: this.$currElement,
+            state: {
+                direction: "right"
+            }
+        });
+        new _carouselTrackDefault.default({
+            parentElement: this.$currElement,
+            state: {
+                slidesData: this.$state.slidesData
+            }
+        });
+        this.$parentElement.appendChild(this.$currElement);
     }
     addHandlerCarouselButtonClick() {
         this.$currElement.addEventListener("click", (e)=>{
             const carouselBtn = e.target.closest(".carousel__button");
             if (!carouselBtn) return;
-            if (carouselBtn.classList.contains("carousel__button--left")) {
-                this.moveSlides("left");
-                console.log("left");
-            } else this.moveSlides("right");
+            if (carouselBtn.classList.contains("carousel__button--left")) this.moveSlides("left");
+            else this.moveSlides("right");
         });
     }
     addHandlerCarouselSlideHover() {
@@ -925,44 +906,10 @@ class Carousel extends _componentDefault.default {
             slide.style.left = `${Number(currWidth) + Number(moveWidth)}px`;
         });
     }
-    renderButton(direction1) {
-        const button = document.createElement("button");
-        button.className = `carousel__button carousel__button--${direction1}`;
-        const arrowIcon = document.createElement("i");
-        arrowIcon.className = `fas fa-chevron-${direction1}`;
-        button.appendChild(arrowIcon);
-        this.$currElement.appendChild(button);
-    }
-    renderTrack() {
-        const track = document.createElement("ul");
-        track.className = "carousel__track";
-        this.$state.data.results.forEach((result)=>{
-            if (result.backdrop_path) new _carouselSlideDefault.default({
-                parentElement: track,
-                state: {
-                    data: result
-                }
-            });
-        });
-        this.$currElement.appendChild(track);
-    }
-    renderTrackSlide(track, result) {
-        if (!result.backdrop_path) return;
-        const slide = `
-      <li class="carousel__slide" data-id="${result.id}">
-        <img
-          class="carousel__image"
-          src="${_config.THE_MOVIE_DB_IMAGE_URL}/${result.backdrop_path}"
-          alt="poster-img"
-        />
-      </li>
-    `;
-        track.insertAdjacentHTML("beforeend", slide);
-    }
 }
 exports.default = Carousel;
 
-},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../config":"6V52N","./CarouselSlide":"kQ1A0","../../utils":"fIYUT"}],"kQ1A0":[function(require,module,exports) {
+},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../config":"6V52N","./CarouselSlide":"kQ1A0","../../utils":"fIYUT","./CarouselButton":"6rQgR","./CarouselTrack":"4nuMK"}],"kQ1A0":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _component = require("../Component/Component");
@@ -970,15 +917,13 @@ var _componentDefault = parcelHelpers.interopDefault(_component);
 var _carouselSlideModal = require("./CarouselSlideModal");
 var _carouselSlideModalDefault = parcelHelpers.interopDefault(_carouselSlideModal);
 var _config = require("../../config");
-var _utils = require("../../utils");
 class CarouselSlide extends _componentDefault.default {
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = document.createElement("li");
         this.$currElement.className = "carousel__slide";
         this.$currElement.setAttribute("data-id", this.$state.data.id);
-        const genre = _utils.getGenre(this.$state.data);
-        this.$currElement.setAttribute("data-genre", genre);
+        this.$currElement.setAttribute("data-genre", this.$state.data.genre);
         this.render();
     }
     render() {
@@ -994,7 +939,7 @@ class CarouselSlide extends _componentDefault.default {
         const slideImageMarkup = `
       <img
         class="carousel__image"
-        src="${_config.THE_MOVIE_DB_IMAGE_URL}/${this.$state.data.backdrop_path}"
+        src="${_config.THE_MOVIE_DB_IMAGE_URL}/${this.$state.data.slideImage}"
         alt="poster-img"
       />
     `;
@@ -1003,12 +948,12 @@ class CarouselSlide extends _componentDefault.default {
 }
 exports.default = CarouselSlide;
 
-},{"../Component/Component":"gzPoJ","./CarouselSlideModal":"bJst9","../../config":"6V52N","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../utils":"fIYUT"}],"bJst9":[function(require,module,exports) {
+},{"../Component/Component":"gzPoJ","./CarouselSlideModal":"bJst9","../../config":"6V52N","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"bJst9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+var _config = require("../../config");
 var _component = require("../Component/Component");
 var _componentDefault = parcelHelpers.interopDefault(_component);
-var _config = require("../../config");
 class CarouselSlideModal extends _componentDefault.default {
     constructor(componenetInfo){
         super(componenetInfo);
@@ -1027,7 +972,7 @@ class CarouselSlideModal extends _componentDefault.default {
       <div class="carousel__slide__modal__image-container">
         <img
           class="carousel__slide__modal__image"
-          src="${_config.THE_MOVIE_DB_IMAGE_URL}/${this.$state.data.backdrop_path}"
+          src="${_config.THE_MOVIE_DB_IMAGE_URL}/${this.$state.data.slideImage}"
           alt="poster-img"
         />
       </div>
@@ -1037,17 +982,7 @@ class CarouselSlideModal extends _componentDefault.default {
     renderSlideModalBody() {
         const modalBodyMarkup = `
       <div class="carousel__slide__modal__body">
-        <div class="title">
-          ${this.$state.data.original_title ?? this.$state.data.original_name}  
-        </div>
-        <div class="rating">${this.$state.data.adult ? "Adult" : "All"}</div>
-        <ul class="genre-list">
-          ${this.$state.data.genre_ids.slice(0, 3).map((genreId)=>{
-            return `
-            <li class="genre">${_config.GENRE_HASHTABLE[genreId]}</li>
-            `;
-        }).join("")}
-        </ul>
+        ${this.$state.data.slideModalContentHTML}
       </div>
     `;
         this.$currElement.insertAdjacentHTML("beforeend", modalBodyMarkup);
@@ -1055,7 +990,171 @@ class CarouselSlideModal extends _componentDefault.default {
 }
 exports.default = CarouselSlideModal;
 
-},{"../Component/Component":"gzPoJ","../../config":"6V52N","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"kaH4g":[function(require,module,exports) {
+},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../config":"6V52N"}],"6rQgR":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _component = require("../Component/Component");
+var _componentDefault = parcelHelpers.interopDefault(_component);
+class CarouselButton extends _componentDefault.default {
+    constructor(componentInfo){
+        super(componentInfo);
+        this.$currElement = document.createElement("button");
+        this.$currElement.className = `carousel__button carousel__button--${this.$state.direction}`;
+        this.render();
+    }
+    render() {
+        this.$currElement.innerHTML = "";
+        const arrowIcon = document.createElement("i");
+        arrowIcon.className = `fas fa-chevron-${this.$state.direction}`;
+        this.$currElement.appendChild(arrowIcon);
+        this.$parentElement.appendChild(this.$currElement);
+    }
+}
+exports.default = CarouselButton;
+
+},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"4nuMK":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _component = require("../Component/Component");
+var _componentDefault = parcelHelpers.interopDefault(_component);
+var _carouselSlide = require("./CarouselSlide");
+var _carouselSlideDefault = parcelHelpers.interopDefault(_carouselSlide);
+class CarouselTrack extends _componentDefault.default {
+    constructor(componentInfo){
+        super(componentInfo);
+        this.$currElement = document.createElement("ul");
+        this.$currElement.className = "carousel__track";
+        this.render();
+    }
+    render() {
+        this.$currElement.innerHTML = "";
+        this.$state.slidesData.forEach((data)=>{
+            new _carouselSlideDefault.default({
+                parentElement: this.$currElement,
+                state: {
+                    data
+                }
+            });
+        });
+        this.$parentElement.appendChild(this.$currElement);
+    }
+}
+exports.default = CarouselTrack;
+
+},{"../Component/Component":"gzPoJ","./CarouselSlide":"kQ1A0","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"29JFq":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _utils = require("../../utils");
+var _config = require("../../config");
+var _carousel = require("../Carousel/Carousel");
+var _carouselDefault = parcelHelpers.interopDefault(_carousel);
+var _component = require("../Component/Component");
+var _componentDefault = parcelHelpers.interopDefault(_component);
+class LolomoRowCarousel extends _componentDefault.default {
+    constructor(componentInfo){
+        super(componentInfo);
+        this.render();
+    }
+    async render() {
+        await this.prepareDataState();
+        new _carouselDefault.default({
+            parentElement: this.$parentElement,
+            state: {
+                className: "lolomo__row__carousel",
+                slidesData: this.$state.slidesData
+            }
+        });
+    }
+    async prepareDataState() {
+        this.$state.slidesData = [];
+        const data = await this.fetchData();
+        data.results.forEach((result)=>{
+            if (result.backdrop_path) {
+                const slideData = {
+                    id: result.id,
+                    genre: result.original_title ? "movie" : "tv",
+                    slideImage: result.backdrop_path,
+                    slideModalContentHTML: `
+            <div class="title">
+              ${result.original_title ?? result.original_name}  
+            </div>
+            <div class="rating">${result.adult ? "Adult" : "All"}</div>
+            <ul class="genre-list">
+              ${result.genre_ids.slice(0, 3).map((genreId)=>{
+                        return `
+                    <li class="genre">
+                      ${_config.GENRE_HASHTABLE[genreId]}
+                    </li>
+                  `;
+                    }).join("")}
+            </ul>
+          `
+                };
+                this.$state.slidesData.push(slideData);
+            }
+        });
+    }
+    async fetchData() {
+        let data = {
+        };
+        let requestURL = "";
+        try {
+            switch(this.$state.category){
+                case "trend":
+                    requestURL = `/trending/${this.$state.genre}/day`;
+                    data = await _utils.request(requestURL);
+                    break;
+                case "popular":
+                case "top_rated":
+                    if (this.$state.genre === "all") {
+                        let movieData = await _utils.request(`/movie/${this.$state.category}`);
+                        let tvData = await _utils.request(`/tv/${this.$state.category}`);
+                        movieData = movieData.results;
+                        tvData = tvData.results;
+                        data.results = [];
+                        for(let i = 0; i < 10; ++i)data.results.push(movieData[i], tvData[i]);
+                        break;
+                    }
+                    requestURL = `/${this.$state.genre}/${this.$state.category}`;
+                    data = await _utils.request(requestURL);
+                    break;
+                case "upcoming":
+                case "now_playing":
+                    requestURL = `/movie/${this.$state.category}`;
+                    data = await _utils.request(requestURL);
+                    break;
+            }
+            return data;
+        } catch (e) {
+            console.log(e.message);
+            console.log(`Failed to retrieve data from "${requestURL}"`);
+        }
+    }
+}
+exports.default = LolomoRowCarousel;
+
+},{"../Carousel/Carousel":"goTYN","../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../utils":"fIYUT","../../config":"6V52N"}],"6wc11":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _utils = require("../../utils");
+var _component = require("../Component/Component");
+var _componentDefault = parcelHelpers.interopDefault(_component);
+class LolomoRowHeader extends _componentDefault.default {
+    constructor(componentInfo){
+        super(componentInfo);
+        this.$currElement = document.createElement("div");
+        this.$currElement.className = "lolomo__row__header";
+        this.render();
+    }
+    render() {
+        this.$currElement.innerHTML = "";
+        this.$currElement.textContent = _utils.capitalizeFirstCharacter(this.$state.category).replace(/_/g, " ");
+        this.$parentElement.appendChild(this.$currElement);
+    }
+}
+exports.default = LolomoRowHeader;
+
+},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../utils":"fIYUT"}],"kaH4g":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _utils = require("../../utils");
@@ -1208,6 +1307,7 @@ class Navbar extends _componentDefault.default {
         this.$currElement.className = "navbar";
         this.render();
         this.addHandlerNavbarTabClick();
+        this.addHandlerTurnoffActiveTab();
     }
     render() {
         this.$currElement.innerHTML = "";
@@ -1219,7 +1319,6 @@ class Navbar extends _componentDefault.default {
         });
         this.$parentElement.appendChild(this.$currElement);
         this.toggleNavbarTabActive();
-        this.addHandlerTurnoffActiveTab();
     }
     addHandlerTurnoffActiveTab() {
         this.$currElement.addEventListener("turnoffActiveTab", (e)=>{
@@ -1230,10 +1329,7 @@ class Navbar extends _componentDefault.default {
         });
     }
     setState(newState) {
-        this.$state = {
-            ...this.$state,
-            ...newState
-        };
+        this.$state = newState;
     }
     toggleNavbarTabActive() {
         const navbarTabs = this.$currElement.querySelectorAll(".navbar__tab");
@@ -1248,9 +1344,6 @@ class Navbar extends _componentDefault.default {
             if (!target.classList.contains("navbar__tab")) return;
             if (this.$state.activeTab === target) return;
             this.toggleNavbarTabActive();
-            this.setState({
-                activeTab: target.textContent
-            });
             const nextURL = `/${target.textContent}`;
             const nextTitle = `${target.textContent} - Netflix`;
             const nextState = {

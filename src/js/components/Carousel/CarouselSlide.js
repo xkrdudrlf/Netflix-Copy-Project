@@ -1,7 +1,6 @@
 import Component from "../Component/Component";
 import CarouselSlideModal from "./CarouselSlideModal";
 import * as config from "../../config";
-import * as utils from "../../utils";
 
 export default class CarouselSlide extends Component {
   constructor(componentInfo) {
@@ -10,8 +9,7 @@ export default class CarouselSlide extends Component {
     this.$currElement = document.createElement("li");
     this.$currElement.className = "carousel__slide";
     this.$currElement.setAttribute("data-id", this.$state.data.id);
-    const genre = utils.getGenre(this.$state.data);
-    this.$currElement.setAttribute("data-genre", genre);
+    this.$currElement.setAttribute("data-genre", this.$state.data.genre);
 
     this.render();
   }
@@ -33,7 +31,7 @@ export default class CarouselSlide extends Component {
     const slideImageMarkup = `
       <img
         class="carousel__image"
-        src="${config.THE_MOVIE_DB_IMAGE_URL}/${this.$state.data.backdrop_path}"
+        src="${config.THE_MOVIE_DB_IMAGE_URL}/${this.$state.data.slideImage}"
         alt="poster-img"
       />
     `;

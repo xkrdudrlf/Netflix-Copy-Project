@@ -10,6 +10,8 @@ export default class Main extends Component {
     this.$currElement.className = "main";
 
     this.render();
+
+    this.addHandlerRenderDetails();
   }
 
   render(update = false) {
@@ -22,8 +24,6 @@ export default class Main extends Component {
     }
 
     if (!update) this.$parentElement.appendChild(this.$currElement);
-
-    this.addHandlerRenderDetails();
   }
 
   addHandlerRenderDetails() {

@@ -21,13 +21,15 @@ export default class App extends Component {
     }
 
     const activeTab = decodeURI(location.pathname.split("/")[1]);
-    const content =
-      activeTab === "tv" || activeTab === "movie" ? "details" : "lolomo";
 
     new Navbar({ parentElement: this.$currElement, state: { activeTab } });
     new Main({
       parentElement: this.$currElement,
-      state: { activeTab, content },
+      state: {
+        activeTab,
+        content:
+          activeTab === "tv" || activeTab === "movie" ? "details" : "lolomo",
+      },
     });
     new Footer({ parentElement: this.$currElement });
   }

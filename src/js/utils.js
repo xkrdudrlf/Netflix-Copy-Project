@@ -28,7 +28,3 @@ export const request = async (url, options = {}) => {
 export const capitalizeFirstCharacter = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
-
-export const getGenre = (data) => {
-  return data.original_title ? "movie" : "tv";
-};
