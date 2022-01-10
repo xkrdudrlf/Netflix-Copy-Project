@@ -460,95 +460,13 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"3auaO":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _app = require("./components/App");
-var _appDefault = parcelHelpers.interopDefault(_app);
-new _appDefault.default({
+var _appMjs = require("./components/App.mjs");
+var _appMjsDefault = parcelHelpers.interopDefault(_appMjs);
+new _appMjsDefault.default({
     parentElement: document.querySelector(".app")
 });
 
-},{"./components/App":"5LdSq","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"5LdSq":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _component = require("./Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-var _footer = require("./Footer/Footer");
-var _footerDefault = parcelHelpers.interopDefault(_footer);
-var _main = require("./Main/Main");
-var _mainDefault = parcelHelpers.interopDefault(_main);
-var _navbar = require("./Navbar/Navbar");
-var _navbarDefault = parcelHelpers.interopDefault(_navbar);
-class App extends _componentDefault.default {
-    constructor(componentInfo){
-        super(componentInfo);
-        this.$currElement = this.$parentElement;
-        this.onInit();
-    }
-    onInit() {
-        this.render();
-        this.addHandlerRoute();
-    }
-    render() {
-        if (window.location.pathname === "/") window.location.replace("/Home");
-        const activeTab = decodeURI(location.pathname.split("/")[1]);
-        this.$currElement.innerHTML = "";
-        new _navbarDefault.default({
-            parentElement: this.$currElement,
-            state: {
-                activeTab
-            }
-        });
-        new _mainDefault.default({
-            parentElement: this.$currElement,
-            state: {
-                activeTab,
-                content: activeTab === "tv" || activeTab === "movie" ? "details" : "lolomo"
-            }
-        });
-        new _footerDefault.default({
-            parentElement: this.$currElement
-        });
-    }
-    addHandlerRoute() {
-        [
-            "urlchange",
-            "popstate"
-        ].forEach((event)=>{
-            window.addEventListener(event, (e)=>{
-                this.render();
-            });
-        });
-    }
-}
-exports.default = App;
-
-},{"./Component/Component":"gzPoJ","./Main/Main":"8qBKu","./Navbar/Navbar":"h3817","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","./Footer/Footer":"6r1GA"}],"gzPoJ":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-class Component {
-    $parentElement;
-    $currElement;
-    $state;
-    constructor({ parentElement , state ={
-    }  }){
-        this.$parentElement = parentElement;
-        this.$state = state;
-    }
-    renderSpinner() {
-        const spinnerMarkup = `
-      <div class="spinner">
-        <i class="fas fa-spinner"></i>
-      </div>
-    `;
-        this.$currElement.insertAdjacentHTML("beforeend", spinnerMarkup);
-    }
-    removeSpinner() {
-        const spinner = this.$currElement.querySelector(".spinner");
-        this.$currElement.removeChild(spinner);
-    }
-}
-exports.default = Component;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"ciiiV":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","./components/App.mjs":"572kA"}],"ciiiV":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -578,16 +496,174 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"8qBKu":[function(require,module,exports) {
+},{}],"572kA":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-var _lolomo = require("../Lolomo/Lolomo");
-var _lolomoDefault = parcelHelpers.interopDefault(_lolomo);
-var _details = require("../Details/Details");
-var _detailsDefault = parcelHelpers.interopDefault(_details);
-class Main extends _componentDefault.default {
+var _componentMjs = require("./Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+var _footerMjs = require("./Footer/Footer.mjs");
+var _footerMjsDefault = parcelHelpers.interopDefault(_footerMjs);
+var _mainMjs = require("./Main/Main.mjs");
+var _mainMjsDefault = parcelHelpers.interopDefault(_mainMjs);
+var _navbarMjs = require("./Navbar/Navbar.mjs");
+var _navbarMjsDefault = parcelHelpers.interopDefault(_navbarMjs);
+class App extends _componentMjsDefault.default {
+    constructor(componentInfo){
+        super(componentInfo);
+        this.$currElement = this.$parentElement;
+        this.onInit();
+    }
+    onInit() {
+        this.render();
+        this.addHandlerRoute();
+    }
+    render() {
+        if (window.location.pathname === "/") window.location.replace("/Home");
+        const activeTab = decodeURI(location.pathname.split("/")[1]);
+        this.$currElement.innerHTML = "";
+        new _navbarMjsDefault.default({
+            parentElement: this.$currElement,
+            state: {
+                activeTab
+            }
+        });
+        new _mainMjsDefault.default({
+            parentElement: this.$currElement,
+            state: {
+                activeTab,
+                content: activeTab === "tv" || activeTab === "movie" ? "details" : "lolomo"
+            }
+        });
+        new _footerMjsDefault.default({
+            parentElement: this.$currElement
+        });
+    }
+    addHandlerRoute() {
+        [
+            "urlchange",
+            "popstate"
+        ].forEach((event)=>{
+            window.addEventListener(event, (e)=>{
+                this.render();
+            });
+        });
+    }
+}
+exports.default = App;
+
+},{"./Component/Component.mjs":"9TZMV","./Footer/Footer.mjs":"xbpW8","./Main/Main.mjs":"HIocZ","./Navbar/Navbar.mjs":"8gchz","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"9TZMV":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+class Component {
+    $parentElement;
+    $currElement;
+    $state;
+    constructor({ parentElement , state ={
+    }  }){
+        this.$parentElement = parentElement;
+        this.$state = state;
+    }
+    renderSpinner() {
+        const spinnerMarkup = `
+      <div class="spinner">
+        <i class="fas fa-spinner"></i>
+      </div>
+    `;
+        this.$currElement.insertAdjacentHTML("beforeend", spinnerMarkup);
+    }
+    removeSpinner() {
+        const spinner = this.$currElement.querySelector(".spinner");
+        this.$currElement.removeChild(spinner);
+    }
+}
+exports.default = Component;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"xbpW8":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+var _attributionLogoJpg = require("../../../img/attributionLogo.jpg");
+var _attributionLogoJpgDefault = parcelHelpers.interopDefault(_attributionLogoJpg);
+class Footer extends _componentMjsDefault.default {
+    constructor(componentInfo){
+        super(componentInfo);
+        this.$currElement = document.createElement("footer");
+        this.$currElement.className = "footer";
+        this.render();
+    }
+    render() {
+        this.$currElement.innerHTML = "";
+        this.renderStaticContent();
+        this.$parentElement.appendChild(this.$currElement);
+    }
+    renderStaticContent() {
+        const contentMarkup = `
+      <div class="attribution-container">
+        <p>
+          Data from 
+          <img
+              class="attribution-logo"
+              src="${_attributionLogoJpgDefault.default}"
+              alt=""
+          />
+        </p>
+      </div>
+      <p>© 2022 Younggil Tak</p>
+    `;
+        this.$currElement.insertAdjacentHTML("beforeend", contentMarkup);
+    }
+}
+exports.default = Footer;
+
+},{"../Component/Component.mjs":"9TZMV","../../../img/attributionLogo.jpg":"dq1NS","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"dq1NS":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('2QLmQ') + "attributionLogo.4742489c.jpg" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"chiK4"}],"chiK4":[function(require,module,exports) {
+"use strict";
+var bundleURL = {
+};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return '/';
+}
+function getBaseURL(url) {
+    return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
+} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ('' + url).match(/(https?|file|ftp):\/\/[^/]+/);
+    if (!matches) throw new Error('Origin not found');
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"HIocZ":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+var _lolomoMjs = require("../Lolomo/Lolomo.mjs");
+var _lolomoMjsDefault = parcelHelpers.interopDefault(_lolomoMjs);
+var _detailsMjs = require("../Details/Details.mjs");
+var _detailsMjsDefault = parcelHelpers.interopDefault(_detailsMjs);
+class Main extends _componentMjsDefault.default {
     $update = false;
     constructor(componentInfo){
         super(componentInfo);
@@ -598,10 +674,10 @@ class Main extends _componentDefault.default {
     }
     render() {
         this.$currElement.innerHTML = "";
-        if (this.$state.content === "details") new _detailsDefault.default({
+        if (this.$state.content === "details") new _detailsMjsDefault.default({
             parentElement: this.$currElement
         });
-        else new _lolomoDefault.default({
+        else new _lolomoMjsDefault.default({
             parentElement: this.$currElement,
             state: this.$state
         });
@@ -622,14 +698,14 @@ class Main extends _componentDefault.default {
 }
 exports.default = Main;
 
-},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../Lolomo/Lolomo":"1TdpI","../Details/Details":"kaH4g"}],"1TdpI":[function(require,module,exports) {
+},{"../Component/Component.mjs":"9TZMV","../Lolomo/Lolomo.mjs":"PgRZ5","../Details/Details.mjs":"uNW2a","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"PgRZ5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-var _lolomoRow = require("./LolomoRow");
-var _lolomoRowDefault = parcelHelpers.interopDefault(_lolomoRow);
-class Lolomo extends _componentDefault.default {
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+var _lolomoRowMjs = require("./LolomoRow.mjs");
+var _lolomoRowMjsDefault = parcelHelpers.interopDefault(_lolomoRowMjs);
+class Lolomo extends _componentMjsDefault.default {
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = document.createElement("div");
@@ -640,7 +716,7 @@ class Lolomo extends _componentDefault.default {
         this.$currElement.innerHTML = "";
         const [categories, genre] = this.getCategoriesAndGenre();
         categories.forEach((category)=>{
-            new _lolomoRowDefault.default({
+            new _lolomoRowMjsDefault.default({
                 parentElement: this.$currElement,
                 state: {
                     genre,
@@ -698,19 +774,16 @@ class Lolomo extends _componentDefault.default {
 }
 exports.default = Lolomo;
 
-},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","./LolomoRow":"3yHpL"}],"3yHpL":[function(require,module,exports) {
+},{"../Component/Component.mjs":"9TZMV","./LolomoRow.mjs":"3PHJL","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"3PHJL":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-var _utils = require("../../utils");
-var _carousel = require("../Carousel/Carousel");
-var _carouselDefault = parcelHelpers.interopDefault(_carousel);
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-var _lolomoRowCarousel = require("./LolomoRowCarousel");
-var _lolomoRowCarouselDefault = parcelHelpers.interopDefault(_lolomoRowCarousel);
-var _lolomoRowHeader = require("./LolomoRowHeader");
-var _lolomoRowHeaderDefault = parcelHelpers.interopDefault(_lolomoRowHeader);
-class LolomoRow extends _componentDefault.default {
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+var _lolomoRowCarouselMjs = require("./LolomoRowCarousel.mjs");
+var _lolomoRowCarouselMjsDefault = parcelHelpers.interopDefault(_lolomoRowCarouselMjs);
+var _lolomoRowHeaderMjs = require("./LolomoRowHeader.mjs");
+var _lolomoRowHeaderMjsDefault = parcelHelpers.interopDefault(_lolomoRowHeaderMjs);
+class LolomoRow extends _componentMjsDefault.default {
     $category;
     constructor(componentInfo){
         super(componentInfo);
@@ -720,13 +793,13 @@ class LolomoRow extends _componentDefault.default {
     }
     render() {
         this.$currElement.innerHTML = "";
-        new _lolomoRowHeaderDefault.default({
+        new _lolomoRowHeaderMjsDefault.default({
             parentElement: this.$currElement,
             state: {
                 ...this.$state
             }
         });
-        new _lolomoRowCarouselDefault.default({
+        new _lolomoRowCarouselMjsDefault.default({
             parentElement: this.$currElement,
             state: {
                 ...this.$state
@@ -737,7 +810,99 @@ class LolomoRow extends _componentDefault.default {
 }
 exports.default = LolomoRow;
 
-},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../utils":"fIYUT","../Carousel/Carousel":"goTYN","./LolomoRowCarousel":"29JFq","./LolomoRowHeader":"6wc11"}],"fIYUT":[function(require,module,exports) {
+},{"../Component/Component.mjs":"9TZMV","./LolomoRowCarousel.mjs":"hBqOd","./LolomoRowHeader.mjs":"3p2DZ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"hBqOd":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _utils = require("../../utils");
+var _config = require("../../config");
+var _carouselMjs = require("../Carousel/Carousel.mjs");
+var _carouselMjsDefault = parcelHelpers.interopDefault(_carouselMjs);
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+class LolomoRowCarousel extends _componentMjsDefault.default {
+    constructor(componentInfo){
+        super(componentInfo);
+        this.render();
+    }
+    async render() {
+        await this.prepareDataState();
+        new _carouselMjsDefault.default({
+            parentElement: this.$parentElement,
+            state: {
+                className: "lolomo__row__carousel",
+                slidesData: this.$state.slidesData
+            }
+        });
+    }
+    async prepareDataState() {
+        this.$state.slidesData = [];
+        const data = await this.fetchData();
+        data.results.forEach((result)=>{
+            if (result.backdrop_path) {
+                const slideData = {
+                    id: result.id,
+                    genre: result.original_title ? "movie" : "tv",
+                    slideImage: result.backdrop_path,
+                    slideModalContentHTML: `
+            <div class="title">
+              ${result.original_title ?? result.original_name}  
+            </div>
+            <div class="rating">${result.adult ? "Adult" : "All"}</div>
+            <ul class="genre-list">
+              ${result.genre_ids.slice(0, 3).map((genreId)=>{
+                        return `
+                    <li class="genre">
+                      ${_config.GENRE_HASHTABLE[genreId]}
+                    </li>
+                  `;
+                    }).join("")}
+            </ul>
+          `
+                };
+                this.$state.slidesData.push(slideData);
+            }
+        });
+    }
+    async fetchData() {
+        let data = {
+        };
+        let requestURL = "";
+        try {
+            switch(this.$state.category){
+                case "trend":
+                    requestURL = `/trending/${this.$state.genre}/day`;
+                    data = await _utils.request(requestURL);
+                    break;
+                case "popular":
+                case "top_rated":
+                    if (this.$state.genre === "all") {
+                        let movieData = await _utils.request(`/movie/${this.$state.category}`);
+                        let tvData = await _utils.request(`/tv/${this.$state.category}`);
+                        movieData = movieData.results;
+                        tvData = tvData.results;
+                        data.results = [];
+                        for(let i = 0; i < 10; ++i)data.results.push(movieData[i], tvData[i]);
+                        break;
+                    }
+                    requestURL = `/${this.$state.genre}/${this.$state.category}`;
+                    data = await _utils.request(requestURL);
+                    break;
+                case "upcoming":
+                case "now_playing":
+                    requestURL = `/movie/${this.$state.category}`;
+                    data = await _utils.request(requestURL);
+                    break;
+            }
+            return data;
+        } catch (e) {
+            console.log(e.message);
+            console.log(`Failed to retrieve data from "${requestURL}"`);
+        }
+    }
+}
+exports.default = LolomoRowCarousel;
+
+},{"../../utils":"fIYUT","../../config":"6V52N","../Carousel/Carousel.mjs":"3PvKt","../Component/Component.mjs":"9TZMV","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"fIYUT":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "pushState", ()=>pushState
@@ -822,17 +987,17 @@ const GENRE_HASHTABLE = {
     37: "Western"
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"goTYN":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"3PvKt":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _utils = require("../../utils");
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-var _carouselButton = require("./CarouselButton");
-var _carouselButtonDefault = parcelHelpers.interopDefault(_carouselButton);
-var _carouselTrack = require("./CarouselTrack");
-var _carouselTrackDefault = parcelHelpers.interopDefault(_carouselTrack);
-class Carousel extends _componentDefault.default {
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+var _carouselButtonMjs = require("./CarouselButton.mjs");
+var _carouselButtonMjsDefault = parcelHelpers.interopDefault(_carouselButtonMjs);
+var _carouselTrackMjs = require("./CarouselTrack.mjs");
+var _carouselTrackMjsDefault = parcelHelpers.interopDefault(_carouselTrackMjs);
+class Carousel extends _componentMjsDefault.default {
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = document.createElement("div");
@@ -844,19 +1009,19 @@ class Carousel extends _componentDefault.default {
     }
     render() {
         this.$currElement.innerHTML = "";
-        new _carouselButtonDefault.default({
+        new _carouselButtonMjsDefault.default({
             parentElement: this.$currElement,
             state: {
                 direction: "left"
             }
         });
-        new _carouselButtonDefault.default({
+        new _carouselButtonMjsDefault.default({
             parentElement: this.$currElement,
             state: {
                 direction: "right"
             }
         });
-        new _carouselTrackDefault.default({
+        new _carouselTrackMjsDefault.default({
             parentElement: this.$currElement,
             state: {
                 slidesData: this.$state.slidesData
@@ -928,12 +1093,12 @@ class Carousel extends _componentDefault.default {
 }
 exports.default = Carousel;
 
-},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../utils":"fIYUT","./CarouselButton":"6rQgR","./CarouselTrack":"4nuMK"}],"6rQgR":[function(require,module,exports) {
+},{"../../utils":"fIYUT","../Component/Component.mjs":"9TZMV","./CarouselButton.mjs":"dYoag","./CarouselTrack.mjs":"d0pWr","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"dYoag":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-class CarouselButton extends _componentDefault.default {
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+class CarouselButton extends _componentMjsDefault.default {
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = document.createElement("button");
@@ -950,14 +1115,14 @@ class CarouselButton extends _componentDefault.default {
 }
 exports.default = CarouselButton;
 
-},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"4nuMK":[function(require,module,exports) {
+},{"../Component/Component.mjs":"9TZMV","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"d0pWr":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-var _carouselSlide = require("./CarouselSlide");
-var _carouselSlideDefault = parcelHelpers.interopDefault(_carouselSlide);
-class CarouselTrack extends _componentDefault.default {
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+var _carouselSlideMjs = require("./CarouselSlide.mjs");
+var _carouselSlideMjsDefault = parcelHelpers.interopDefault(_carouselSlideMjs);
+class CarouselTrack extends _componentMjsDefault.default {
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = document.createElement("ul");
@@ -967,7 +1132,7 @@ class CarouselTrack extends _componentDefault.default {
     render() {
         this.$currElement.innerHTML = "";
         this.$state.slidesData.forEach((data)=>{
-            new _carouselSlideDefault.default({
+            new _carouselSlideMjsDefault.default({
                 parentElement: this.$currElement,
                 state: {
                     data
@@ -979,17 +1144,17 @@ class CarouselTrack extends _componentDefault.default {
 }
 exports.default = CarouselTrack;
 
-},{"../Component/Component":"gzPoJ","./CarouselSlide":"kQ1A0","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"kQ1A0":[function(require,module,exports) {
+},{"../Component/Component.mjs":"9TZMV","./CarouselSlide.mjs":"4Medh","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"4Medh":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-var _carouselSlideModal = require("./CarouselSlideModal");
-var _carouselSlideModalDefault = parcelHelpers.interopDefault(_carouselSlideModal);
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+var _carouselSlideModalMjs = require("./CarouselSlideModal.mjs");
+var _carouselSlideModalMjsDefault = parcelHelpers.interopDefault(_carouselSlideModalMjs);
 var _config = require("../../config");
-var _carouselSlideImage = require("./CarouselSlideImage");
-var _carouselSlideImageDefault = parcelHelpers.interopDefault(_carouselSlideImage);
-class CarouselSlide extends _componentDefault.default {
+var _carouselSlideImageMjs = require("./CarouselSlideImage.mjs");
+var _carouselSlideImageMjsDefault = parcelHelpers.interopDefault(_carouselSlideImageMjs);
+class CarouselSlide extends _componentMjsDefault.default {
     $slideModal;
     $slideImage;
     constructor(componentInfo){
@@ -1004,11 +1169,11 @@ class CarouselSlide extends _componentDefault.default {
     render() {
         this.$currElement.innerHTML = "";
         this.renderSpinner();
-        this.$slideModal = new _carouselSlideModalDefault.default({
+        this.$slideModal = new _carouselSlideModalMjsDefault.default({
             parentElement: this.$currElement,
             state: this.$state
         });
-        this.$slideImage = new _carouselSlideImageDefault.default({
+        this.$slideImage = new _carouselSlideImageMjsDefault.default({
             parentElement: this.$currElement,
             state: this.$state
         });
@@ -1034,13 +1199,13 @@ class CarouselSlide extends _componentDefault.default {
 }
 exports.default = CarouselSlide;
 
-},{"../Component/Component":"gzPoJ","./CarouselSlideModal":"bJst9","../../config":"6V52N","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","./CarouselSlideImage":"gHvAB"}],"bJst9":[function(require,module,exports) {
+},{"../Component/Component.mjs":"9TZMV","./CarouselSlideModal.mjs":"dDeuf","../../config":"6V52N","./CarouselSlideImage.mjs":"f6TI1","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"dDeuf":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _config = require("../../config");
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-class CarouselSlideModal extends _componentDefault.default {
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+class CarouselSlideModal extends _componentMjsDefault.default {
     constructor(componenetInfo){
         super(componenetInfo);
         this.$currElement = document.createElement("div");
@@ -1082,13 +1247,13 @@ class CarouselSlideModal extends _componentDefault.default {
 }
 exports.default = CarouselSlideModal;
 
-},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../config":"6V52N"}],"gHvAB":[function(require,module,exports) {
+},{"../../config":"6V52N","../Component/Component.mjs":"9TZMV","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"f6TI1":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _config = require("../../config");
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-class CarouselSlideImage extends _componentDefault.default {
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+class CarouselSlideImage extends _componentMjsDefault.default {
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = document.createElement("img");
@@ -1109,105 +1274,13 @@ class CarouselSlideImage extends _componentDefault.default {
 }
 exports.default = CarouselSlideImage;
 
-},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../config":"6V52N"}],"29JFq":[function(require,module,exports) {
+},{"../../config":"6V52N","../Component/Component.mjs":"9TZMV","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"3p2DZ":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _utils = require("../../utils");
-var _config = require("../../config");
-var _carousel = require("../Carousel/Carousel");
-var _carouselDefault = parcelHelpers.interopDefault(_carousel);
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-class LolomoRowCarousel extends _componentDefault.default {
-    constructor(componentInfo){
-        super(componentInfo);
-        this.render();
-    }
-    async render() {
-        await this.prepareDataState();
-        new _carouselDefault.default({
-            parentElement: this.$parentElement,
-            state: {
-                className: "lolomo__row__carousel",
-                slidesData: this.$state.slidesData
-            }
-        });
-    }
-    async prepareDataState() {
-        this.$state.slidesData = [];
-        const data = await this.fetchData();
-        data.results.forEach((result)=>{
-            if (result.backdrop_path) {
-                const slideData = {
-                    id: result.id,
-                    genre: result.original_title ? "movie" : "tv",
-                    slideImage: result.backdrop_path,
-                    slideModalContentHTML: `
-            <div class="title">
-              ${result.original_title ?? result.original_name}  
-            </div>
-            <div class="rating">${result.adult ? "Adult" : "All"}</div>
-            <ul class="genre-list">
-              ${result.genre_ids.slice(0, 3).map((genreId)=>{
-                        return `
-                    <li class="genre">
-                      ${_config.GENRE_HASHTABLE[genreId]}
-                    </li>
-                  `;
-                    }).join("")}
-            </ul>
-          `
-                };
-                this.$state.slidesData.push(slideData);
-            }
-        });
-    }
-    async fetchData() {
-        let data = {
-        };
-        let requestURL = "";
-        try {
-            switch(this.$state.category){
-                case "trend":
-                    requestURL = `/trending/${this.$state.genre}/day`;
-                    data = await _utils.request(requestURL);
-                    break;
-                case "popular":
-                case "top_rated":
-                    if (this.$state.genre === "all") {
-                        let movieData = await _utils.request(`/movie/${this.$state.category}`);
-                        let tvData = await _utils.request(`/tv/${this.$state.category}`);
-                        movieData = movieData.results;
-                        tvData = tvData.results;
-                        data.results = [];
-                        for(let i = 0; i < 10; ++i)data.results.push(movieData[i], tvData[i]);
-                        break;
-                    }
-                    requestURL = `/${this.$state.genre}/${this.$state.category}`;
-                    data = await _utils.request(requestURL);
-                    break;
-                case "upcoming":
-                case "now_playing":
-                    requestURL = `/movie/${this.$state.category}`;
-                    data = await _utils.request(requestURL);
-                    break;
-            }
-            return data;
-        } catch (e) {
-            console.log(e.message);
-            console.log(`Failed to retrieve data from "${requestURL}"`);
-        }
-    }
-}
-exports.default = LolomoRowCarousel;
-
-},{"../Carousel/Carousel":"goTYN","../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../utils":"fIYUT","../../config":"6V52N"}],"6wc11":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _utils = require("../../utils");
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-class LolomoRowHeader extends _componentDefault.default {
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+class LolomoRowHeader extends _componentMjsDefault.default {
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = document.createElement("div");
@@ -1222,16 +1295,16 @@ class LolomoRowHeader extends _componentDefault.default {
 }
 exports.default = LolomoRowHeader;
 
-},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../utils":"fIYUT"}],"kaH4g":[function(require,module,exports) {
+},{"../../utils":"fIYUT","../Component/Component.mjs":"9TZMV","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"uNW2a":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _utils = require("../../utils");
 var _config = require("../../config");
-var _card = require("../Card/Card");
-var _cardDefault = parcelHelpers.interopDefault(_card);
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-class Details extends _componentDefault.default {
+var _cardMjs = require("../Card/Card.mjs");
+var _cardMjsDefault = parcelHelpers.interopDefault(_cardMjs);
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+class Details extends _componentMjsDefault.default {
     constructor(componentInfo){
         super(componentInfo);
         this.render();
@@ -1239,7 +1312,7 @@ class Details extends _componentDefault.default {
     async render() {
         this.$state.className = "details";
         await this.prepareDataState();
-        new _cardDefault.default({
+        new _cardMjsDefault.default({
             parentElement: this.$parentElement,
             state: this.$state
         });
@@ -1308,12 +1381,12 @@ class Details extends _componentDefault.default {
 }
 exports.default = Details;
 
-},{"../Card/Card":"jpApr","../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../utils":"fIYUT","../../config":"6V52N"}],"jpApr":[function(require,module,exports) {
+},{"../../utils":"fIYUT","../../config":"6V52N","../Card/Card.mjs":"jwJfp","../Component/Component.mjs":"9TZMV","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"jwJfp":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-class Card extends _componentDefault.default {
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+class Card extends _componentMjsDefault.default {
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = document.createElement("div");
@@ -1358,17 +1431,17 @@ class Card extends _componentDefault.default {
 }
 exports.default = Card;
 
-},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"h3817":[function(require,module,exports) {
+},{"../Component/Component.mjs":"9TZMV","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"8gchz":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _utils = require("../../utils");
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
 var _navbarLogo = require("./NavbarLogo");
 var _navbarLogoDefault = parcelHelpers.interopDefault(_navbarLogo);
 var _navbarNavigation = require("./NavbarNavigation");
 var _navbarNavigationDefault = parcelHelpers.interopDefault(_navbarNavigation);
-class Navbar extends _componentDefault.default {
+class Navbar extends _componentMjsDefault.default {
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = document.createElement("nav");
@@ -1423,12 +1496,12 @@ class Navbar extends _componentDefault.default {
 }
 exports.default = Navbar;
 
-},{"../../utils":"fIYUT","../Component/Component":"gzPoJ","./NavbarLogo":"jVqpA","./NavbarNavigation":"4aPtd","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"jVqpA":[function(require,module,exports) {
+},{"../../utils":"fIYUT","../Component/Component.mjs":"9TZMV","./NavbarLogo":"8R5SG","./NavbarNavigation":"jRzIK","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"8R5SG":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-class NavbarLogo extends _componentDefault.default {
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+class NavbarLogo extends _componentMjsDefault.default {
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = document.createElement("div");
@@ -1441,16 +1514,16 @@ class NavbarLogo extends _componentDefault.default {
 }
 exports.default = NavbarLogo;
 
-},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"4aPtd":[function(require,module,exports) {
+},{"../Component/Component.mjs":"9TZMV","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"jRzIK":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-var _navbarNavigationPrimary = require("./NavbarNavigationPrimary");
-var _navbarNavigationPrimaryDefault = parcelHelpers.interopDefault(_navbarNavigationPrimary);
-var _navbarNavigationSecondary = require("./NavbarNavigationSecondary");
-var _navbarNavigationSecondaryDefault = parcelHelpers.interopDefault(_navbarNavigationSecondary);
-class NavbarNavigation extends _componentDefault.default {
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+var _navbarNavigationPrimaryMjs = require("./NavbarNavigationPrimary.mjs");
+var _navbarNavigationPrimaryMjsDefault = parcelHelpers.interopDefault(_navbarNavigationPrimaryMjs);
+var _navbarNavigationSecondaryMjs = require("./NavbarNavigationSecondary.mjs");
+var _navbarNavigationSecondaryMjsDefault = parcelHelpers.interopDefault(_navbarNavigationSecondaryMjs);
+class NavbarNavigation extends _componentMjsDefault.default {
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = document.createElement("div");
@@ -1459,10 +1532,10 @@ class NavbarNavigation extends _componentDefault.default {
     }
     render() {
         this.$currElement.innerHTML = "";
-        new _navbarNavigationPrimaryDefault.default({
+        new _navbarNavigationPrimaryMjsDefault.default({
             parentElement: this.$currElement
         });
-        new _navbarNavigationSecondaryDefault.default({
+        new _navbarNavigationSecondaryMjsDefault.default({
             parentElement: this.$currElement
         });
         this.$parentElement.appendChild(this.$currElement);
@@ -1470,12 +1543,12 @@ class NavbarNavigation extends _componentDefault.default {
 }
 exports.default = NavbarNavigation;
 
-},{"../Component/Component":"gzPoJ","./NavbarNavigationPrimary":"7QZ8X","./NavbarNavigationSecondary":"3CNLk","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"7QZ8X":[function(require,module,exports) {
+},{"../Component/Component.mjs":"9TZMV","./NavbarNavigationPrimary.mjs":"6oTG0","./NavbarNavigationSecondary.mjs":"4Cw98","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"6oTG0":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-class NavbarPrimary extends _componentDefault.default {
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+class NavbarPrimary extends _componentMjsDefault.default {
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = document.createElement("ul");
@@ -1510,12 +1583,12 @@ class NavbarPrimary extends _componentDefault.default {
 }
 exports.default = NavbarPrimary;
 
-},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"3CNLk":[function(require,module,exports) {
+},{"../Component/Component.mjs":"9TZMV","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"4Cw98":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-class NavbarSecondary extends _componentDefault.default {
+var _componentMjs = require("../Component/Component.mjs");
+var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
+class NavbarSecondary extends _componentMjsDefault.default {
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = document.createElement("div");
@@ -1549,82 +1622,6 @@ class NavbarSecondary extends _componentDefault.default {
 }
 exports.default = NavbarSecondary;
 
-},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"6r1GA":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-var _attributionLogoJpg = require("../../../img/attributionLogo.jpg");
-var _attributionLogoJpgDefault = parcelHelpers.interopDefault(_attributionLogoJpg);
-class Footer extends _componentDefault.default {
-    constructor(componentInfo){
-        super(componentInfo);
-        this.$currElement = document.createElement("footer");
-        this.$currElement.className = "footer";
-        this.render();
-    }
-    render() {
-        this.$currElement.innerHTML = "";
-        this.renderStaticContent();
-        this.$parentElement.appendChild(this.$currElement);
-    }
-    renderStaticContent() {
-        const contentMarkup = `
-      <div class="attribution-container">
-        <p>
-          Data from 
-          <img
-              class="attribution-logo"
-              src="${_attributionLogoJpgDefault.default}"
-              alt=""
-          />
-        </p>
-      </div>
-      <p>© 2022 Younggil Tak</p>
-    `;
-        this.$currElement.insertAdjacentHTML("beforeend", contentMarkup);
-    }
-}
-exports.default = Footer;
-
-},{"../Component/Component":"gzPoJ","../../../img/attributionLogo.jpg":"dq1NS","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"dq1NS":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('2QLmQ') + "attributionLogo.4742489c.jpg" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"chiK4"}],"chiK4":[function(require,module,exports) {
-"use strict";
-var bundleURL = {
-};
-function getBundleURLCached(id) {
-    var value = bundleURL[id];
-    if (!value) {
-        value = getBundleURL();
-        bundleURL[id] = value;
-    }
-    return value;
-}
-function getBundleURL() {
-    try {
-        throw new Error();
-    } catch (err) {
-        var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
-        if (matches) // The first two stack frames will be this function and getBundleURLCached.
-        // Use the 3rd one, which will be a runtime in the original bundle.
-        return getBaseURL(matches[2]);
-    }
-    return '/';
-}
-function getBaseURL(url) {
-    return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
-} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function getOrigin(url) {
-    var matches = ('' + url).match(/(https?|file|ftp):\/\/[^/]+/);
-    if (!matches) throw new Error('Origin not found');
-    return matches[0];
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-exports.getOrigin = getOrigin;
-
-},{}]},["cSv3F","3auaO"], "3auaO", "parcelRequire945c")
+},{"../Component/Component.mjs":"9TZMV","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["cSv3F","3auaO"], "3auaO", "parcelRequire945c")
 
 //# sourceMappingURL=index.8b7fb9b3.js.map
