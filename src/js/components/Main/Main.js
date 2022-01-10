@@ -3,6 +3,7 @@ import Lolomo from "../Lolomo/Lolomo";
 import Details from "../Details/Details";
 
 export default class Main extends Component {
+  $update = false;
   constructor(componentInfo) {
     super(componentInfo);
 
@@ -14,7 +15,7 @@ export default class Main extends Component {
     this.addHandlerRenderDetails();
   }
 
-  render(update = false) {
+  render() {
     this.$currElement.innerHTML = "";
 
     if (this.$state.content === "details") {
@@ -23,14 +24,15 @@ export default class Main extends Component {
       new Lolomo({ parentElement: this.$currElement, state: this.$state });
     }
 
-    if (!update) this.$parentElement.appendChild(this.$currElement);
+    if (!this.$update) this.$parentElement.appendChild(this.$currElement);
   }
 
   addHandlerRenderDetails() {
     ["urlchange", "popstate"].forEach((event) => {
       this.$currElement.addEventListener(event, async (e) => {
         this.$state.content = "details";
-        this.render(true);
+        this.$update = true;
+        this.render();
       });
     });
   }

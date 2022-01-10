@@ -53,9 +53,8 @@ export default class Navbar extends Component {
       if (target.classList.contains("navbar__logo")) {
         target = this.$currElement.querySelector(".navbar__tab");
       }
-
       if (!target.classList.contains("navbar__tab")) return;
-      if (this.$state.activeTab === target) return;
+      if (this.$state.activeTab === target.textContent) return;
 
       this.toggleNavbarTabActive();
 

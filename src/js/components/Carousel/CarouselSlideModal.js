@@ -26,7 +26,8 @@ export default class CarouselSlideModal extends Component {
       <div class="carousel__slide__modal__image-container">
         <img
           class="carousel__slide__modal__image"
-          src="${config.THE_MOVIE_DB_IMAGE_URL}/${this.$state.data.slideImage}"
+          src=""
+          data-src="${config.THE_MOVIE_DB_IMAGE_URL}/${this.$state.data.slideImage}"
           alt="poster-img"
         />
       </div>
@@ -43,5 +44,13 @@ export default class CarouselSlideModal extends Component {
     `;
 
     this.$currElement.insertAdjacentHTML("beforeend", modalBodyMarkup);
+  }
+
+  async loadImage() {
+    const image = this.$currElement.querySelector(
+      ".carousel__slide__modal__image"
+    );
+    image.src = image.dataset.src;
+    await image.decode();
   }
 }

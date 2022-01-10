@@ -481,13 +481,16 @@ class App extends _componentDefault.default {
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = this.$parentElement;
+        this.onInit();
+    }
+    onInit() {
         this.render();
         this.addHandlerRoute();
     }
     render() {
-        this.$currElement.innerHTML = "";
         if (window.location.pathname === "/") window.location.replace("/Home");
         const activeTab = decodeURI(location.pathname.split("/")[1]);
+        this.$currElement.innerHTML = "";
         new _navbarDefault.default({
             parentElement: this.$currElement,
             state: {
@@ -529,6 +532,18 @@ class Component {
     }  }){
         this.$parentElement = parentElement;
         this.$state = state;
+    }
+    renderSpinner() {
+        const spinnerMarkup = `
+      <div class="spinner">
+        <i class="fas fa-spinner"></i>
+      </div>
+    `;
+        this.$currElement.insertAdjacentHTML("beforeend", spinnerMarkup);
+    }
+    removeSpinner() {
+        const spinner = this.$currElement.querySelector(".spinner");
+        this.$currElement.removeChild(spinner);
     }
 }
 exports.default = Component;
@@ -573,6 +588,7 @@ var _lolomoDefault = parcelHelpers.interopDefault(_lolomo);
 var _details = require("../Details/Details");
 var _detailsDefault = parcelHelpers.interopDefault(_details);
 class Main extends _componentDefault.default {
+    $update = false;
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = document.createElement("main");
@@ -580,7 +596,7 @@ class Main extends _componentDefault.default {
         this.render();
         this.addHandlerRenderDetails();
     }
-    render(update = false) {
+    render() {
         this.$currElement.innerHTML = "";
         if (this.$state.content === "details") new _detailsDefault.default({
             parentElement: this.$currElement
@@ -589,7 +605,7 @@ class Main extends _componentDefault.default {
             parentElement: this.$currElement,
             state: this.$state
         });
-        if (!update) this.$parentElement.appendChild(this.$currElement);
+        if (!this.$update) this.$parentElement.appendChild(this.$currElement);
     }
     addHandlerRenderDetails() {
         [
@@ -598,7 +614,8 @@ class Main extends _componentDefault.default {
         ].forEach((event)=>{
             this.$currElement.addEventListener(event, async (e)=>{
                 this.$state.content = "details";
-                this.render(true);
+                this.$update = true;
+                this.render();
             });
         });
     }
@@ -767,14 +784,14 @@ parcelHelpers.export(exports, "THE_MOVIE_DB_API_KEY", ()=>THE_MOVIE_DB_API_KEY
 );
 parcelHelpers.export(exports, "THE_MOVIE_DB_IMAGE_URL", ()=>THE_MOVIE_DB_IMAGE_URL
 );
-parcelHelpers.export(exports, "SLIDE_WIDTH_WITH_MARGIN", ()=>SLIDE_WIDTH_WITH_MARGIN
+parcelHelpers.export(exports, "LAZY_LOAD_IMAGE_THRESHOLD", ()=>LAZY_LOAD_IMAGE_THRESHOLD
 );
 parcelHelpers.export(exports, "GENRE_HASHTABLE", ()=>GENRE_HASHTABLE
 );
 const THE_MOVIE_DB_URL = "https://api.themoviedb.org/3";
 const THE_MOVIE_DB_API_KEY = "de088b40ef657d3aadc907af18e76ae1";
-const THE_MOVIE_DB_IMAGE_URL = "https://image.tmdb.org/t/p/w500";
-const SLIDE_WIDTH_WITH_MARGIN = 230;
+const THE_MOVIE_DB_IMAGE_URL = "https://image.tmdb.org/t/p/w300";
+const LAZY_LOAD_IMAGE_THRESHOLD = 0.3;
 const GENRE_HASHTABLE = {
     28: "Action",
     12: "Adventure",
@@ -808,14 +825,11 @@ const GENRE_HASHTABLE = {
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"goTYN":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-var _config = require("../../config");
 var _utils = require("../../utils");
 var _component = require("../Component/Component");
 var _componentDefault = parcelHelpers.interopDefault(_component);
 var _carouselButton = require("./CarouselButton");
 var _carouselButtonDefault = parcelHelpers.interopDefault(_carouselButton);
-var _carouselSlide = require("./CarouselSlide");
-var _carouselSlideDefault = parcelHelpers.interopDefault(_carouselSlide);
 var _carouselTrack = require("./CarouselTrack");
 var _carouselTrackDefault = parcelHelpers.interopDefault(_carouselTrack);
 class Carousel extends _componentDefault.default {
@@ -863,6 +877,7 @@ class Carousel extends _componentDefault.default {
             const currSlide = e.target.closest(".carousel__slide");
             if (!currSlide) return;
             const slideModal = currSlide.querySelector(".carousel__slide__modal");
+            if (!slideModal) return;
             slideModal.style.visibility = "visible";
             slideModal.style.opacity = 1;
             slideModal.style.top = "-50px";
@@ -871,6 +886,7 @@ class Carousel extends _componentDefault.default {
             const currSlide = e.target.closest(".carousel__slide");
             if (!currSlide) return;
             const slideModal = currSlide.querySelector(".carousel__slide__modal");
+            if (!slideModal) return;
             slideModal.style.visibility = "hidden";
             slideModal.style.opacity = 0;
             slideModal.style.top = "0";
@@ -894,8 +910,11 @@ class Carousel extends _componentDefault.default {
     }
     moveSlides(direction) {
         const slides = this.$currElement.querySelectorAll(".carousel__slide");
+        const slide1 = slides[1] ?? slides[0];
+        const computedStyleSlide = getComputedStyle(slide1);
+        const slideWidthWithMargin = +computedStyleSlide.width.split("px")[0] + +computedStyleSlide.marginLeft.split("px")[0];
         const carouselWidth = this.$currElement.getBoundingClientRect().width;
-        let moveWidth = _config.SLIDE_WIDTH_WITH_MARGIN * Math.floor(carouselWidth / _config.SLIDE_WIDTH_WITH_MARGIN);
+        let moveWidth = slideWidthWithMargin * Math.floor(carouselWidth / slideWidthWithMargin);
         if (direction === "left") moveWidth *= -1;
         // Return immediately upon reaching the far-left or far-right
         if (direction === "left" && slides[slides.length - 1].getBoundingClientRect().right < this.$currElement.getBoundingClientRect().right) return;
@@ -909,88 +928,7 @@ class Carousel extends _componentDefault.default {
 }
 exports.default = Carousel;
 
-},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../config":"6V52N","./CarouselSlide":"kQ1A0","../../utils":"fIYUT","./CarouselButton":"6rQgR","./CarouselTrack":"4nuMK"}],"kQ1A0":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-var _carouselSlideModal = require("./CarouselSlideModal");
-var _carouselSlideModalDefault = parcelHelpers.interopDefault(_carouselSlideModal);
-var _config = require("../../config");
-class CarouselSlide extends _componentDefault.default {
-    constructor(componentInfo){
-        super(componentInfo);
-        this.$currElement = document.createElement("li");
-        this.$currElement.className = "carousel__slide";
-        this.$currElement.setAttribute("data-id", this.$state.data.id);
-        this.$currElement.setAttribute("data-genre", this.$state.data.genre);
-        this.render();
-    }
-    render() {
-        this.$currElement.innerHTML = "";
-        new _carouselSlideModalDefault.default({
-            parentElement: this.$currElement,
-            state: this.$state
-        });
-        this.renderSlideImage();
-        this.$parentElement.appendChild(this.$currElement);
-    }
-    renderSlideImage() {
-        const slideImageMarkup = `
-      <img
-        class="carousel__image"
-        src="${_config.THE_MOVIE_DB_IMAGE_URL}/${this.$state.data.slideImage}"
-        alt="poster-img"
-      />
-    `;
-        this.$currElement.insertAdjacentHTML("beforeend", slideImageMarkup);
-    }
-}
-exports.default = CarouselSlide;
-
-},{"../Component/Component":"gzPoJ","./CarouselSlideModal":"bJst9","../../config":"6V52N","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"bJst9":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _config = require("../../config");
-var _component = require("../Component/Component");
-var _componentDefault = parcelHelpers.interopDefault(_component);
-class CarouselSlideModal extends _componentDefault.default {
-    constructor(componenetInfo){
-        super(componenetInfo);
-        this.$currElement = document.createElement("div");
-        this.$currElement.className = "carousel__slide__modal";
-        this.render();
-    }
-    render() {
-        this.$currElement.innerHTML = "";
-        this.renderSlideModalImage();
-        this.renderSlideModalBody();
-        this.$parentElement.appendChild(this.$currElement);
-    }
-    renderSlideModalImage() {
-        const modalImageMarkup = `
-      <div class="carousel__slide__modal__image-container">
-        <img
-          class="carousel__slide__modal__image"
-          src="${_config.THE_MOVIE_DB_IMAGE_URL}/${this.$state.data.slideImage}"
-          alt="poster-img"
-        />
-      </div>
-    `;
-        this.$currElement.insertAdjacentHTML("beforeend", modalImageMarkup);
-    }
-    renderSlideModalBody() {
-        const modalBodyMarkup = `
-      <div class="carousel__slide__modal__body">
-        ${this.$state.data.slideModalContentHTML}
-      </div>
-    `;
-        this.$currElement.insertAdjacentHTML("beforeend", modalBodyMarkup);
-    }
-}
-exports.default = CarouselSlideModal;
-
-},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../config":"6V52N"}],"6rQgR":[function(require,module,exports) {
+},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../utils":"fIYUT","./CarouselButton":"6rQgR","./CarouselTrack":"4nuMK"}],"6rQgR":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _component = require("../Component/Component");
@@ -1041,7 +979,137 @@ class CarouselTrack extends _componentDefault.default {
 }
 exports.default = CarouselTrack;
 
-},{"../Component/Component":"gzPoJ","./CarouselSlide":"kQ1A0","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"29JFq":[function(require,module,exports) {
+},{"../Component/Component":"gzPoJ","./CarouselSlide":"kQ1A0","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"kQ1A0":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _component = require("../Component/Component");
+var _componentDefault = parcelHelpers.interopDefault(_component);
+var _carouselSlideModal = require("./CarouselSlideModal");
+var _carouselSlideModalDefault = parcelHelpers.interopDefault(_carouselSlideModal);
+var _config = require("../../config");
+var _carouselSlideImage = require("./CarouselSlideImage");
+var _carouselSlideImageDefault = parcelHelpers.interopDefault(_carouselSlideImage);
+class CarouselSlide extends _componentDefault.default {
+    $slideModal;
+    $slideImage;
+    constructor(componentInfo){
+        super(componentInfo);
+        this.$currElement = document.createElement("li");
+        this.$currElement.className = "carousel__slide";
+        this.$currElement.setAttribute("data-id", this.$state.data.id);
+        this.$currElement.setAttribute("data-genre", this.$state.data.genre);
+        this.render();
+        this.addHandlerLazyLoadImage();
+    }
+    render() {
+        this.$currElement.innerHTML = "";
+        this.renderSpinner();
+        this.$slideModal = new _carouselSlideModalDefault.default({
+            parentElement: this.$currElement,
+            state: this.$state
+        });
+        this.$slideImage = new _carouselSlideImageDefault.default({
+            parentElement: this.$currElement,
+            state: this.$state
+        });
+        this.$parentElement.appendChild(this.$currElement);
+    }
+    // UPDATE:
+    addHandlerLazyLoadImage() {
+        const options = {
+            threshold: _config.LAZY_LOAD_IMAGE_THRESHOLD
+        };
+        const imageObserver = new IntersectionObserver((entries)=>{
+            entries.forEach(async (entry)=>{
+                if (entry.isIntersecting) {
+                    imageObserver.unobserve(entry.target);
+                    await this.$slideModal.loadImage();
+                    await this.$slideImage.loadImage();
+                    this.removeSpinner();
+                }
+            });
+        }, options);
+        imageObserver.observe(this.$currElement);
+    }
+}
+exports.default = CarouselSlide;
+
+},{"../Component/Component":"gzPoJ","./CarouselSlideModal":"bJst9","../../config":"6V52N","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","./CarouselSlideImage":"gHvAB"}],"bJst9":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _config = require("../../config");
+var _component = require("../Component/Component");
+var _componentDefault = parcelHelpers.interopDefault(_component);
+class CarouselSlideModal extends _componentDefault.default {
+    constructor(componenetInfo){
+        super(componenetInfo);
+        this.$currElement = document.createElement("div");
+        this.$currElement.className = "carousel__slide__modal";
+        this.render();
+    }
+    render() {
+        this.$currElement.innerHTML = "";
+        this.renderSlideModalImage();
+        this.renderSlideModalBody();
+        this.$parentElement.appendChild(this.$currElement);
+    }
+    renderSlideModalImage() {
+        const modalImageMarkup = `
+      <div class="carousel__slide__modal__image-container">
+        <img
+          class="carousel__slide__modal__image"
+          src=""
+          data-src="${_config.THE_MOVIE_DB_IMAGE_URL}/${this.$state.data.slideImage}"
+          alt="poster-img"
+        />
+      </div>
+    `;
+        this.$currElement.insertAdjacentHTML("beforeend", modalImageMarkup);
+    }
+    renderSlideModalBody() {
+        const modalBodyMarkup = `
+      <div class="carousel__slide__modal__body">
+        ${this.$state.data.slideModalContentHTML}
+      </div>
+    `;
+        this.$currElement.insertAdjacentHTML("beforeend", modalBodyMarkup);
+    }
+    async loadImage() {
+        const image = this.$currElement.querySelector(".carousel__slide__modal__image");
+        image.src = image.dataset.src;
+        await image.decode();
+    }
+}
+exports.default = CarouselSlideModal;
+
+},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../config":"6V52N"}],"gHvAB":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _config = require("../../config");
+var _component = require("../Component/Component");
+var _componentDefault = parcelHelpers.interopDefault(_component);
+class CarouselSlideImage extends _componentDefault.default {
+    constructor(componentInfo){
+        super(componentInfo);
+        this.$currElement = document.createElement("img");
+        this.$currElement.className = "carousel__image";
+        this.$currElement.dataset.src = `${_config.THE_MOVIE_DB_IMAGE_URL}/${this.$state.data.slideImage}`;
+        this.$currElement.alt = "poster-img";
+        this.$currElement.style.display = "none";
+        this.render();
+    }
+    render() {
+        this.$parentElement.appendChild(this.$currElement);
+    }
+    async loadImage() {
+        this.$currElement.src = this.$currElement.dataset.src;
+        await this.$currElement.decode();
+        this.$currElement.style.display = "block";
+    }
+}
+exports.default = CarouselSlideImage;
+
+},{"../Component/Component":"gzPoJ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../config":"6V52N"}],"29JFq":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _utils = require("../../utils");
@@ -1342,7 +1410,7 @@ class Navbar extends _componentDefault.default {
             let target = e.target;
             if (target.classList.contains("navbar__logo")) target = this.$currElement.querySelector(".navbar__tab");
             if (!target.classList.contains("navbar__tab")) return;
-            if (this.$state.activeTab === target) return;
+            if (this.$state.activeTab === target.textContent) return;
             this.toggleNavbarTabActive();
             const nextURL = `/${target.textContent}`;
             const nextTitle = `${target.textContent} - Netflix`;

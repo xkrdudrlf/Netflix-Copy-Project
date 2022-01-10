@@ -1,8 +1,11 @@
 import Component from "../Component/Component";
 import CarouselSlideModal from "./CarouselSlideModal";
 import * as config from "../../config";
+import CarouselSlideImage from "./CarouselSlideImage";
 
 export default class CarouselSlide extends Component {
+  $slideModal;
+  $slideImage;
   constructor(componentInfo) {
     super(componentInfo);
 
@@ -12,30 +15,45 @@ export default class CarouselSlide extends Component {
     this.$currElement.setAttribute("data-genre", this.$state.data.genre);
 
     this.render();
+
+    this.addHandlerLazyLoadImage();
   }
 
   render() {
     this.$currElement.innerHTML = "";
 
-    new CarouselSlideModal({
+    this.renderSpinner();
+
+    this.$slideModal = new CarouselSlideModal({
       parentElement: this.$currElement,
       state: this.$state,
     });
 
-    this.renderSlideImage();
+    this.$slideImage = new CarouselSlideImage({
+      parentElement: this.$currElement,
+      state: this.$state,
+    });
 
     this.$parentElement.appendChild(this.$currElement);
   }
 
-  renderSlideImage() {
-    const slideImageMarkup = `
-      <img
-        class="carousel__image"
-        src="${config.THE_MOVIE_DB_IMAGE_URL}/${this.$state.data.slideImage}"
-        alt="poster-img"
-      />
-    `;
+  // UPDATE:
+  addHandlerLazyLoadImage() {
+    const options = {
+      threshold: config.LAZY_LOAD_IMAGE_THRESHOLD,
+    };
 
-    this.$currElement.insertAdjacentHTML("beforeend", slideImageMarkup);
+    const imageObserver = new IntersectionObserver((entries) => {
+      entries.forEach(async (entry) => {
+        if (entry.isIntersecting) {
+          imageObserver.unobserve(entry.target);
+          await this.$slideModal.loadImage();
+          await this.$slideImage.loadImage();
+          this.removeSpinner();
+        }
+      });
+    }, options);
+
+    imageObserver.observe(this.$currElement);
   }
 }

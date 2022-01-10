@@ -1,9 +1,7 @@
-import * as config from "../../config";
 import * as utils from "../../utils";
 
 import Component from "../Component/Component";
 import CarouselButton from "./CarouselButton";
-import CarouselSlide from "./CarouselSlide";
 import CarouselTrack from "./CarouselTrack";
 
 export default class Carousel extends Component {
@@ -60,6 +58,7 @@ export default class Carousel extends Component {
       if (!currSlide) return;
 
       const slideModal = currSlide.querySelector(".carousel__slide__modal");
+      if (!slideModal) return;
       slideModal.style.visibility = "visible";
       slideModal.style.opacity = 1;
       slideModal.style.top = "-50px";
@@ -70,6 +69,7 @@ export default class Carousel extends Component {
       if (!currSlide) return;
 
       const slideModal = currSlide.querySelector(".carousel__slide__modal");
+      if (!slideModal) return;
       slideModal.style.visibility = "hidden";
       slideModal.style.opacity = 0;
       slideModal.style.top = "0";
@@ -102,10 +102,15 @@ export default class Carousel extends Component {
 
   moveSlides(direction) {
     const slides = this.$currElement.querySelectorAll(".carousel__slide");
+    const slide = slides[1] ?? slides[0];
+    const computedStyleSlide = getComputedStyle(slide);
+    const slideWidthWithMargin =
+      +computedStyleSlide.width.split("px")[0] +
+      +computedStyleSlide.marginLeft.split("px")[0];
     const carouselWidth = this.$currElement.getBoundingClientRect().width;
+
     let moveWidth =
-      config.SLIDE_WIDTH_WITH_MARGIN *
-      Math.floor(carouselWidth / config.SLIDE_WIDTH_WITH_MARGIN);
+      slideWidthWithMargin * Math.floor(carouselWidth / slideWidthWithMargin);
     if (direction === "left") moveWidth *= -1;
 
     // Return immediately upon reaching the far-left or far-right

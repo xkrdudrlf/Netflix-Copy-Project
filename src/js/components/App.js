@@ -8,19 +8,23 @@ export default class App extends Component {
     super(componentInfo);
     this.$currElement = this.$parentElement;
 
+    this.onInit();
+  }
+
+  onInit() {
     this.render();
 
     this.addHandlerRoute();
   }
 
   render() {
-    this.$currElement.innerHTML = "";
-
     if (window.location.pathname === "/") {
       window.location.replace("/Home");
     }
 
     const activeTab = decodeURI(location.pathname.split("/")[1]);
+
+    this.$currElement.innerHTML = "";
 
     new Navbar({ parentElement: this.$currElement, state: { activeTab } });
     new Main({

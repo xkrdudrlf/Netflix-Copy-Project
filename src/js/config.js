@@ -1,7 +1,7 @@
 export const THE_MOVIE_DB_URL = "https://api.themoviedb.org/3";
 export const THE_MOVIE_DB_API_KEY = "de088b40ef657d3aadc907af18e76ae1";
-export const THE_MOVIE_DB_IMAGE_URL = "https://image.tmdb.org/t/p/w500";
-export const SLIDE_WIDTH_WITH_MARGIN = 230;
+export const THE_MOVIE_DB_IMAGE_URL = "https://image.tmdb.org/t/p/w300";
+export const LAZY_LOAD_IMAGE_THRESHOLD = 0.3;
 
 export const GENRE_HASHTABLE = {
   28: "Action",

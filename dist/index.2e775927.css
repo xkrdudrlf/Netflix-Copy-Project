@@ -102,7 +102,7 @@
 .lolomo__row {
   display: flex;
   flex-direction: column;
-  height: 160px;
+  height: 200px;
   width: 100%;
   margin-top: 25px;
 }
@@ -176,11 +176,14 @@
 
 .carousel__slide {
   display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   height: 100%;
+  min-height: 120px;
   min-width: 220px;
   margin-left: 10px;
-  background-color: lightcoral;
+  background-color: rgb(44, 44, 44);
   transition: left 0.3s ease-out, height 1s ease-in;
   cursor: pointer;
 }
@@ -343,6 +346,22 @@
   min-height: 100vh;
   background-color: black;
   overflow: hidden;
+}
+.spinner {
+  margin: 1rem 1.5rem;
+  text-align: center;
+  font-size: 20px;
+}
+.spinner i {
+  animation: rotate 1s infinite linear;
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /*# sourceMappingURL=index.2e775927.css.map */
