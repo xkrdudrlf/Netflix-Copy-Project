@@ -1,6 +1,6 @@
 import Component from "../Component/Component.mjs";
 import CarouselSlideModal from "./CarouselSlideModal.mjs";
-import * as config from "../../config";
+import * as config from "../../config.mjs";
 import CarouselSlideImage from "./CarouselSlideImage.mjs";
 
 export default class CarouselSlide extends Component {

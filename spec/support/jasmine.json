@@ -5,7 +5,7 @@
     "js/components/**/*.test.?(m)js"
   ],
   "helpers": [
-    "../spec/helpers/**/*.?(m)js"
+    "../spec/helpers/*.?(m)js"
   ],
   "env": {
     "stopSpecOnExpectationFailure": false,

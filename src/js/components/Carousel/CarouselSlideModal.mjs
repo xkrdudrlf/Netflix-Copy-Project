@@ -1,4 +1,4 @@
-import * as config from "../../config";
+import * as config from "../../config.mjs";
 
 import Component from "../Component/Component.mjs";
 

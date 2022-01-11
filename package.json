@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "jasmine": "^4.0.1",
+    "jsdom": "^19.0.0",
     "parcel": "^2.0.1"
   }
 }

@@ -1,5 +1,5 @@
-import * as utils from "../../utils";
-import * as config from "../../config";
+import * as utils from "../../utils.mjs";
+import * as config from "../../config.mjs";
 
 import Card from "../Card/Card.mjs";
 import Component from "../Component/Component.mjs";

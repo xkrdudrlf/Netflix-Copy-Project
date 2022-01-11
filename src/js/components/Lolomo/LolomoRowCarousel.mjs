@@ -1,5 +1,5 @@
-import * as utils from "../../utils";
-import * as config from "../../config";
+import * as utils from "../../utils.mjs";
+import * as config from "../../config.mjs";
 
 import Carousel from "../Carousel/Carousel.mjs";
 import Component from "../Component/Component.mjs";

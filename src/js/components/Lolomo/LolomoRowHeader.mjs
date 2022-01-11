@@ -1,4 +1,4 @@
-import * as utils from "../../utils";
+import * as utils from "../../utils.mjs";
 
 import Component from "../Component/Component.mjs";
 
