@@ -14,38 +14,23 @@ export default class Navbar extends Component {
     this.render();
 
     this.addHandlerNavbarTabClick();
-    this.addHandlerTurnoffActiveTab();
   }
 
   render() {
     this.$currElement.innerHTML = "";
 
-    new NavbarLogo({ parentElement: this.$currElement });
-    new NavbarNavigation({ parentElement: this.$currElement });
+    const navbarLogo = new NavbarLogo({ parentElement: this.$currElement });
+
+    const navbarNavigation = new NavbarNavigation({
+      parentElement: this.$currElement,
+      state: {
+        activeTab: this.$state.activeTab,
+      },
+    });
+
+    this.addChildren([navbarLogo, navbarNavigation]);
 
     this.$parentElement.appendChild(this.$currElement);
-
-    this.toggleNavbarTabActive();
-  }
-
-  addHandlerTurnoffActiveTab() {
-    this.$currElement.addEventListener("turnoffActiveTab", (e) => {
-      this.toggleNavbarTabActive();
-      this.setState({ activeTab: undefined });
-    });
-  }
-
-  setState(newState) {
-    this.$state = newState;
-  }
-
-  toggleNavbarTabActive() {
-    const navbarTabs = this.$currElement.querySelectorAll(".navbar__tab");
-    navbarTabs.forEach((navbarTab) => {
-      if (navbarTab.textContent === this.$state.activeTab) {
-        navbarTab.classList.toggle("active");
-      }
-    });
   }
 
   addHandlerNavbarTabClick() {
@@ -56,8 +41,6 @@ export default class Navbar extends Component {
       }
       if (!target.classList.contains("navbar__tab")) return;
       if (this.$state.activeTab === target.textContent) return;
-
-      this.toggleNavbarTabActive();
 
       const nextURL = `/${target.textContent}`;
       const nextTitle = `${target.textContent} - Netflix`;

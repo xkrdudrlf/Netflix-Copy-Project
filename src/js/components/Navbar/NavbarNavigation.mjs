@@ -15,8 +15,16 @@ export default class NavbarNavigation extends Component {
   render() {
     this.$currElement.innerHTML = "";
 
-    new NavbarPrimary({ parentElement: this.$currElement });
-    new NavbarSecondary({ parentElement: this.$currElement });
+    const navbarPrimary = new NavbarPrimary({
+      parentElement: this.$currElement,
+      state: { activeTab: this.$state.activeTab },
+    });
+    const navbarSecondary = new NavbarSecondary({
+      parentElement: this.$currElement,
+      state: { activeTab: this.$state.activeTab },
+    });
+
+    this.addChildren([navbarPrimary, navbarSecondary]);
 
     this.$parentElement.appendChild(this.$currElement);
   }

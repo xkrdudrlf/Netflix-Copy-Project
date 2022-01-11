@@ -1,3 +1,5 @@
+import * as utils from "../../utils.mjs";
+
 import Component from "../Component/Component.mjs";
 import LolomoRowCarousel from "./LolomoRowCarousel.mjs";
 import LolomoRowHeader from "./LolomoRowHeader.mjs";

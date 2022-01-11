@@ -481,42 +481,58 @@ class App extends _componentMjsDefault.default {
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = this.$parentElement;
-        this.onInit();
-    }
-    onInit() {
         this.render();
         this.addHandlerRoute();
     }
     render() {
-        if (window.location.pathname === "/") window.location.replace("/Home");
-        const activeTab = decodeURI(location.pathname.split("/")[1]);
         this.$currElement.innerHTML = "";
-        new _navbarMjsDefault.default({
+        this.$state.activeTab = this.getActiveTab();
+        this.$state.content = this.getContent(this.$state.activeTab);
+        console.log(this.$state.activeTab);
+        const navbar = new _navbarMjsDefault.default({
             parentElement: this.$currElement,
             state: {
-                activeTab
+                activeTab: this.$state.activeTab
             }
         });
-        new _mainMjsDefault.default({
+        const main = new _mainMjsDefault.default({
             parentElement: this.$currElement,
             state: {
-                activeTab,
-                content: activeTab === "tv" || activeTab === "movie" ? "details" : "lolomo"
+                activeTab: this.$state.activeTab,
+                content: this.$state.content
             }
         });
-        new _footerMjsDefault.default({
+        const footer = new _footerMjsDefault.default({
             parentElement: this.$currElement
         });
+        this.addChildren([
+            navbar,
+            main,
+            footer
+        ]);
     }
     addHandlerRoute() {
         [
             "urlchange",
             "popstate"
         ].forEach((event)=>{
-            window.addEventListener(event, (e)=>{
-                this.render();
+            window.addEventListener(event, ()=>{
+                const activeTab = this.getActiveTab();
+                const content = this.getContent(activeTab);
+                this.setState({
+                    activeTab,
+                    content
+                });
             });
         });
+    }
+    getActiveTab() {
+        if (window.location.pathname === "/") window.location.replace("/Home");
+        const activeTab = decodeURI(location.pathname.split("/")[1]);
+        return activeTab;
+    }
+    getContent(activeTab) {
+        return activeTab === "tv" || activeTab === "movie" ? "details" : "lolomo";
     }
 }
 exports.default = App;
@@ -527,11 +543,36 @@ parcelHelpers.defineInteropFlag(exports);
 class Component {
     $parentElement;
     $currElement;
+    $childrenElements = [];
     $state;
     constructor({ parentElement , state ={
     }  }){
         this.$parentElement = parentElement;
         this.$state = state;
+    }
+    addChildren(childrenElements) {
+        childrenElements.forEach((child)=>{
+            this.$childrenElements.push(child);
+        });
+    }
+    update(changedStates = null) {
+    }
+    setState(newState) {
+        const changedStates = {
+        };
+        // 1. Update states
+        for (const [key, value] of Object.entries(newState)){
+            if (!this.$state[key] || this.$state[key] === value) continue;
+            this.$state[key] = value;
+            changedStates[key] = value;
+        }
+        if (!Object.keys(changedStates).length) return;
+        // 2. Update the current component
+        this.update(changedStates);
+        // 3. Update the children components
+        this.$childrenElements.forEach((child)=>{
+            if (Object.keys(child.$state).length > 0) child.setState(changedStates);
+        });
     }
     renderSpinner() {
         const spinnerMarkup = `
@@ -664,36 +705,39 @@ var _lolomoMjsDefault = parcelHelpers.interopDefault(_lolomoMjs);
 var _detailsMjs = require("../Details/Details.mjs");
 var _detailsMjsDefault = parcelHelpers.interopDefault(_detailsMjs);
 class Main extends _componentMjsDefault.default {
-    $update = false;
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = document.createElement("main");
         this.$currElement.className = "main";
         this.render();
-        this.addHandlerRenderDetails();
     }
-    render() {
+    render(isUpdate = false) {
         this.$currElement.innerHTML = "";
-        if (this.$state.content === "details") new _detailsMjsDefault.default({
-            parentElement: this.$currElement
-        });
-        else new _lolomoMjsDefault.default({
-            parentElement: this.$currElement,
-            state: this.$state
-        });
-        if (!this.$update) this.$parentElement.appendChild(this.$currElement);
+        this.$childrenElements = [];
+        let newChild;
+        switch(this.$state.content){
+            case "lolomo":
+                newChild = new _lolomoMjsDefault.default({
+                    parentElement: this.$currElement,
+                    state: {
+                        activeTab: this.$state.activeTab
+                    }
+                });
+                break;
+            case "details":
+                newChild = new _detailsMjsDefault.default({
+                    parentElement: this.$currElement
+                });
+                break;
+        }
+        this.addChildren([
+            newChild
+        ]);
+        if (!isUpdate) this.$parentElement.appendChild(this.$currElement);
     }
-    addHandlerRenderDetails() {
-        [
-            "urlchange",
-            "popstate"
-        ].forEach((event)=>{
-            this.$currElement.addEventListener(event, async (e)=>{
-                this.$state.content = "details";
-                this.$update = true;
-                this.render();
-            });
-        });
+    update(changedStates) {
+        if (!changedStates.content) return;
+        this.render(true);
     }
 }
 exports.default = Main;
@@ -712,7 +756,7 @@ class Lolomo extends _componentMjsDefault.default {
         this.$currElement.className = "lolomo";
         this.render();
     }
-    render() {
+    render(isUpdate = false) {
         this.$currElement.innerHTML = "";
         const [categories, genre] = this.getCategoriesAndGenre();
         categories.forEach((category)=>{
@@ -724,7 +768,10 @@ class Lolomo extends _componentMjsDefault.default {
                 }
             });
         });
-        this.$parentElement.appendChild(this.$currElement);
+        if (!isUpdate) this.$parentElement.appendChild(this.$currElement);
+    }
+    update() {
+        this.render(true);
     }
     getCategoriesAndGenre() {
         let categories, genre;
@@ -777,6 +824,7 @@ exports.default = Lolomo;
 },{"../Component/Component.mjs":"9TZMV","./LolomoRow.mjs":"3PHJL","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"3PHJL":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+var _utilsMjs = require("../../utils.mjs");
 var _componentMjs = require("../Component/Component.mjs");
 var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
 var _lolomoRowCarouselMjs = require("./LolomoRowCarousel.mjs");
@@ -810,7 +858,7 @@ class LolomoRow extends _componentMjsDefault.default {
 }
 exports.default = LolomoRow;
 
-},{"../Component/Component.mjs":"9TZMV","./LolomoRowCarousel.mjs":"hBqOd","./LolomoRowHeader.mjs":"3p2DZ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"hBqOd":[function(require,module,exports) {
+},{"../Component/Component.mjs":"9TZMV","./LolomoRowCarousel.mjs":"hBqOd","./LolomoRowHeader.mjs":"3p2DZ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../utils.mjs":"k4STT"}],"hBqOd":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _utilsMjs = require("../../utils.mjs");
@@ -1067,10 +1115,8 @@ class Carousel extends _componentMjsDefault.default {
             const nextState = {
                 additionalInformation: "Updated the URL with JS"
             };
-            const target = document.querySelector(".main");
-            _utilsMjs.pushState(nextState, nextTitle, nextURL, target, false);
-            // Turn off the active status of current ActiveTab
-            _utilsMjs.emitEvent("turnoffActiveTab", document.querySelector(".navbar"), false);
+            const target = document.querySelector(".app");
+            _utilsMjs.pushState(nextState, nextTitle, nextURL, target);
         });
     }
     moveSlides(direction) {
@@ -1448,35 +1494,23 @@ class Navbar extends _componentMjsDefault.default {
         this.$currElement.className = "navbar";
         this.render();
         this.addHandlerNavbarTabClick();
-        this.addHandlerTurnoffActiveTab();
     }
     render() {
         this.$currElement.innerHTML = "";
-        new _navbarLogoMjsDefault.default({
+        const navbarLogo = new _navbarLogoMjsDefault.default({
             parentElement: this.$currElement
         });
-        new _navbarNavigationMjsDefault.default({
-            parentElement: this.$currElement
+        const navbarNavigation = new _navbarNavigationMjsDefault.default({
+            parentElement: this.$currElement,
+            state: {
+                activeTab: this.$state.activeTab
+            }
         });
+        this.addChildren([
+            navbarLogo,
+            navbarNavigation
+        ]);
         this.$parentElement.appendChild(this.$currElement);
-        this.toggleNavbarTabActive();
-    }
-    addHandlerTurnoffActiveTab() {
-        this.$currElement.addEventListener("turnoffActiveTab", (e)=>{
-            this.toggleNavbarTabActive();
-            this.setState({
-                activeTab: undefined
-            });
-        });
-    }
-    setState(newState) {
-        this.$state = newState;
-    }
-    toggleNavbarTabActive() {
-        const navbarTabs = this.$currElement.querySelectorAll(".navbar__tab");
-        navbarTabs.forEach((navbarTab)=>{
-            if (navbarTab.textContent === this.$state.activeTab) navbarTab.classList.toggle("active");
-        });
     }
     addHandlerNavbarTabClick() {
         this.$currElement.addEventListener("click", (e)=>{
@@ -1484,7 +1518,6 @@ class Navbar extends _componentMjsDefault.default {
             if (target.classList.contains("navbar__logo")) target = this.$currElement.querySelector(".navbar__tab");
             if (!target.classList.contains("navbar__tab")) return;
             if (this.$state.activeTab === target.textContent) return;
-            this.toggleNavbarTabActive();
             const nextURL = `/${target.textContent}`;
             const nextTitle = `${target.textContent} - Netflix`;
             const nextState = {
@@ -1532,12 +1565,22 @@ class NavbarNavigation extends _componentMjsDefault.default {
     }
     render() {
         this.$currElement.innerHTML = "";
-        new _navbarNavigationPrimaryMjsDefault.default({
-            parentElement: this.$currElement
+        const navbarPrimary = new _navbarNavigationPrimaryMjsDefault.default({
+            parentElement: this.$currElement,
+            state: {
+                activeTab: this.$state.activeTab
+            }
         });
-        new _navbarNavigationSecondaryMjsDefault.default({
-            parentElement: this.$currElement
+        const navbarSecondary = new _navbarNavigationSecondaryMjsDefault.default({
+            parentElement: this.$currElement,
+            state: {
+                activeTab: this.$state.activeTab
+            }
         });
+        this.addChildren([
+            navbarPrimary,
+            navbarSecondary
+        ]);
         this.$parentElement.appendChild(this.$currElement);
     }
 }
@@ -1549,6 +1592,7 @@ parcelHelpers.defineInteropFlag(exports);
 var _componentMjs = require("../Component/Component.mjs");
 var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
 class NavbarPrimary extends _componentMjsDefault.default {
+    $navbarTabs;
     constructor(componentInfo){
         super(componentInfo);
         this.$currElement = document.createElement("ul");
@@ -1557,11 +1601,17 @@ class NavbarPrimary extends _componentMjsDefault.default {
     }
     render() {
         this.$currElement.innerHTML = "";
-        const navbarTabs = this.createNavbarTabs();
-        navbarTabs.forEach((tab)=>{
+        this.$navbarTabs = this.createNavbarTabs();
+        this.$navbarTabs.forEach((tab)=>{
             this.$currElement.appendChild(tab);
         });
         this.$parentElement.appendChild(this.$currElement);
+    }
+    update() {
+        this.$navbarTabs.forEach((tab)=>{
+            if (tab.textContent === this.$state.activeTab) tab.classList.add("active");
+            else tab.classList.remove("active");
+        });
     }
     createNavbarTabs() {
         const tabNames = [
@@ -1576,7 +1626,7 @@ class NavbarPrimary extends _componentMjsDefault.default {
     }
     createNavbarTab(tabName) {
         const navbarTab = document.createElement("li");
-        navbarTab.className = "navbar__tab";
+        navbarTab.className = `navbar__tab ${this.$state.activeTab === tabName ? "active" : ""}`;
         navbarTab.textContent = tabName;
         return navbarTab;
     }

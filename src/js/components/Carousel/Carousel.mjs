@@ -87,16 +87,9 @@ export default class Carousel extends Component {
         currSlide.dataset.genre
       )} details - Netflix`;
       const nextState = { additionalInformation: "Updated the URL with JS" };
-      const target = document.querySelector(".main");
+      const target = document.querySelector(".app");
 
-      utils.pushState(nextState, nextTitle, nextURL, target, false);
-
-      // Turn off the active status of current ActiveTab
-      utils.emitEvent(
-        "turnoffActiveTab",
-        document.querySelector(".navbar"),
-        false
-      );
+      utils.pushState(nextState, nextTitle, nextURL, target);
     });
   }
 

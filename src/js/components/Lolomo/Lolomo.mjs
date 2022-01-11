@@ -11,7 +11,7 @@ export default class Lolomo extends Component {
     this.render();
   }
 
-  render() {
+  render(isUpdate = false) {
     this.$currElement.innerHTML = "";
 
     const [categories, genre] = this.getCategoriesAndGenre();
@@ -23,7 +23,11 @@ export default class Lolomo extends Component {
       });
     });
 
-    this.$parentElement.appendChild(this.$currElement);
+    if (!isUpdate) this.$parentElement.appendChild(this.$currElement);
+  }
+
+  update() {
+    this.render(true);
   }
 
   getCategoriesAndGenre() {

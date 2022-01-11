@@ -3,7 +3,6 @@ import Lolomo from "../Lolomo/Lolomo.mjs";
 import Details from "../Details/Details.mjs";
 
 export default class Main extends Component {
-  $update = false;
   constructor(componentInfo) {
     super(componentInfo);
 
@@ -11,29 +10,33 @@ export default class Main extends Component {
     this.$currElement.className = "main";
 
     this.render();
-
-    this.addHandlerRenderDetails();
   }
 
-  render() {
+  render(isUpdate = false) {
     this.$currElement.innerHTML = "";
+    this.$childrenElements = [];
 
-    if (this.$state.content === "details") {
-      new Details({ parentElement: this.$currElement });
-    } else {
-      new Lolomo({ parentElement: this.$currElement, state: this.$state });
+    let newChild;
+    switch (this.$state.content) {
+      case "lolomo":
+        newChild = new Lolomo({
+          parentElement: this.$currElement,
+          state: { activeTab: this.$state.activeTab },
+        });
+        break;
+      case "details":
+        newChild = new Details({ parentElement: this.$currElement });
+        break;
     }
 
-    if (!this.$update) this.$parentElement.appendChild(this.$currElement);
+    this.addChildren([newChild]);
+
+    if (!isUpdate) this.$parentElement.appendChild(this.$currElement);
   }
 
-  addHandlerRenderDetails() {
-    ["urlchange", "popstate"].forEach((event) => {
-      this.$currElement.addEventListener(event, async (e) => {
-        this.$state.content = "details";
-        this.$update = true;
-        this.render();
-      });
-    });
+  update(changedStates) {
+    if (!changedStates.content) return;
+
+    this.render(true);
   }
 }
