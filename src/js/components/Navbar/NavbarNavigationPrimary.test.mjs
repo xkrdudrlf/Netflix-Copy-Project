@@ -1,12 +1,11 @@
 import NavbarPrimary from "./NavbarNavigationPrimary.mjs";
 
-const parentElement = document.createElement("div");
+const navbarPrimary = new NavbarPrimary({
+  parentElement: document.createElement("div"),
+});
+const navbarTabs = navbarPrimary.$currElement.querySelectorAll(".navbar__tab");
 
 describe("NavbarPrimary", function () {
-  const navbarPrimary = new NavbarPrimary({ parentElement });
-  const navbarTabs =
-    navbarPrimary.$currElement.querySelectorAll(".navbar__tab");
-
   it("should have the right className", function () {
     expect(navbarPrimary.$currElement.className).toBe(
       "navbar__navigation__primary"

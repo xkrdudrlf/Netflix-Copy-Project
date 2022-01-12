@@ -780,7 +780,6 @@ exports.default = Lolomo;
 },{"../Component/Component.mjs":"9TZMV","./LolomoRow.mjs":"3PHJL","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"3PHJL":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-var _utilsMjs = require("../../utils.mjs");
 var _componentMjs = require("../Component/Component.mjs");
 var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
 var _lolomoRowCarouselMjs = require("./LolomoRowCarousel.mjs");
@@ -814,7 +813,7 @@ class LolomoRow extends _componentMjsDefault.default {
 }
 exports.default = LolomoRow;
 
-},{"../Component/Component.mjs":"9TZMV","./LolomoRowCarousel.mjs":"hBqOd","./LolomoRowHeader.mjs":"3p2DZ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../../utils.mjs":"k4STT"}],"hBqOd":[function(require,module,exports) {
+},{"../Component/Component.mjs":"9TZMV","./LolomoRowCarousel.mjs":"hBqOd","./LolomoRowHeader.mjs":"3p2DZ","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"hBqOd":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _utilsMjs = require("../../utils.mjs");
