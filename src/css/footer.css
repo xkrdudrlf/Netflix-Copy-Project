@@ -7,11 +7,27 @@
   height: 100px;
   margin-bottom: 10px;
 }
+
+.attribution-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
 .attribution-logo {
+  display: flex;
+  align-items: center;
   margin-left: 10px;
-  height: 30px;
-  width: 200px;
   border-radius: 3px;
   background-color: white;
   padding: 2px 8px;
+}
+
+.attribution-logo::before {
+  content: "";
+  height: 30px;
+  width: 200px;
+  background-image: url("../img/attributionLogo.jpg");
+  background-size: 100% 100%;
 }

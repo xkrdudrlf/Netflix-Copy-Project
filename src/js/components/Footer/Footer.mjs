@@ -1,5 +1,4 @@
 import Component from "../Component/Component.mjs";
-import logoImage from "../../../img/attributionLogo.jpg";
 
 export default class Footer extends Component {
   constructor(componentInfo) {
@@ -24,11 +23,8 @@ export default class Footer extends Component {
       <div class="attribution-container">
         <p>
           Data from 
-          <img
-              class="attribution-logo"
-              src="${logoImage}"
-              alt=""
-          />
+          <div class="attribution-logo">
+          </div>
         </p>
       </div>
       <p>© 2022 Younggil Tak</p>

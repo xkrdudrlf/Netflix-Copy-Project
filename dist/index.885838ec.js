@@ -471,12 +471,12 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _componentMjs = require("./Component/Component.mjs");
 var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
-var _footerMjs = require("./Footer/Footer.mjs");
-var _footerMjsDefault = parcelHelpers.interopDefault(_footerMjs);
-var _mainMjs = require("./Main/Main.mjs");
-var _mainMjsDefault = parcelHelpers.interopDefault(_mainMjs);
 var _navbarMjs = require("./Navbar/Navbar.mjs");
 var _navbarMjsDefault = parcelHelpers.interopDefault(_navbarMjs);
+var _mainMjs = require("./Main/Main.mjs");
+var _mainMjsDefault = parcelHelpers.interopDefault(_mainMjs);
+var _footerMjs = require("./Footer/Footer.mjs");
+var _footerMjsDefault = parcelHelpers.interopDefault(_footerMjs);
 class App extends _componentMjsDefault.default {
     constructor(componentInfo){
         super(componentInfo);
@@ -488,7 +488,6 @@ class App extends _componentMjsDefault.default {
         this.$currElement.innerHTML = "";
         this.$state.activeTab = this.getActiveTab();
         this.$state.content = this.getContent(this.$state.activeTab);
-        console.log(this.$state.activeTab);
         const navbar = new _navbarMjsDefault.default({
             parentElement: this.$currElement,
             state: {
@@ -528,7 +527,7 @@ class App extends _componentMjsDefault.default {
     }
     getActiveTab() {
         if (window.location.pathname === "/") window.location.replace("/Home");
-        const activeTab = decodeURI(location.pathname.split("/")[1]);
+        const activeTab = decodeURI(window.location.pathname.split("/")[1]);
         return activeTab;
     }
     getContent(activeTab) {
@@ -624,8 +623,6 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _componentMjs = require("../Component/Component.mjs");
 var _componentMjsDefault = parcelHelpers.interopDefault(_componentMjs);
-var _attributionLogoJpg = require("../../../img/attributionLogo.jpg");
-var _attributionLogoJpgDefault = parcelHelpers.interopDefault(_attributionLogoJpg);
 class Footer extends _componentMjsDefault.default {
     constructor(componentInfo){
         super(componentInfo);
@@ -643,11 +640,8 @@ class Footer extends _componentMjsDefault.default {
       <div class="attribution-container">
         <p>
           Data from 
-          <img
-              class="attribution-logo"
-              src="${_attributionLogoJpgDefault.default}"
-              alt=""
-          />
+          <div class="attribution-logo">
+          </div>
         </p>
       </div>
       <p>© 2022 Younggil Tak</p>
@@ -657,45 +651,7 @@ class Footer extends _componentMjsDefault.default {
 }
 exports.default = Footer;
 
-},{"../Component/Component.mjs":"9TZMV","../../../img/attributionLogo.jpg":"7Rug4","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"7Rug4":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('aEc5k') + "attributionLogo.4742489c.jpg" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"chiK4"}],"chiK4":[function(require,module,exports) {
-"use strict";
-var bundleURL = {
-};
-function getBundleURLCached(id) {
-    var value = bundleURL[id];
-    if (!value) {
-        value = getBundleURL();
-        bundleURL[id] = value;
-    }
-    return value;
-}
-function getBundleURL() {
-    try {
-        throw new Error();
-    } catch (err) {
-        var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
-        if (matches) // The first two stack frames will be this function and getBundleURLCached.
-        // Use the 3rd one, which will be a runtime in the original bundle.
-        return getBaseURL(matches[2]);
-    }
-    return '/';
-}
-function getBaseURL(url) {
-    return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
-} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function getOrigin(url) {
-    var matches = ('' + url).match(/(https?|file|ftp):\/\/[^/]+/);
-    if (!matches) throw new Error('Origin not found');
-    return matches[0];
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-exports.getOrigin = getOrigin;
-
-},{}],"HIocZ":[function(require,module,exports) {
+},{"../Component/Component.mjs":"9TZMV","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"HIocZ":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _componentMjs = require("../Component/Component.mjs");

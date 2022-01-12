@@ -1,7 +1,7 @@
 import Component from "./Component/Component.mjs";
-import Footer from "./Footer/Footer.mjs";
-import Main from "./Main/Main.mjs";
 import Navbar from "./Navbar/Navbar.mjs";
+import Main from "./Main/Main.mjs";
+import Footer from "./Footer/Footer.mjs";
 
 export default class App extends Component {
   constructor(componentInfo) {
@@ -53,7 +53,7 @@ export default class App extends Component {
       window.location.replace("/Home");
     }
 
-    const activeTab = decodeURI(location.pathname.split("/")[1]);
+    const activeTab = decodeURI(window.location.pathname.split("/")[1]);
 
     return activeTab;
   }
