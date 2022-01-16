@@ -3,3 +3,5 @@ node_modules
 .parcel-cache
 dist
 lib
+index2.html
+index3.html
