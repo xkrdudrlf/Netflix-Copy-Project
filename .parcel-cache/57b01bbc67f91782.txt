@@ -1,4 +1,4 @@
-17514
+17519
 48/home/tom/projects/netflix/js/models/appModel.js1640931941520693900 0
 59/home/tom/projects/netflix/js/controllers/mainController.js1640931941520693900 0
 41/home/tom/projects/netflix/js/controllers1640931941520693900 1
@@ -6,6 +6,7 @@
 57/home/tom/projects/netflix/lib/jasmine_examples/Player.js1641794519591618000 0
 47/home/tom/projects/netflix/lib/jasmine_examples1641794519591618000 1
 30/home/tom/projects/netflix/lib1641794519591618000 1
+56/home/tom/projects/netflix/spec/helpers/MockedLolomo.mjs1641961822813360500 0
 48/home/tom/projects/netflix/spec/jasmine_examples1641794519591618000 1
 31/home/tom/projects/netflix/spec1641850763060000000 1
 54/home/tom/projects/netflix/dist/index.2e775927.css.map1641884193941459500 0
@@ -159,9 +160,9 @@
 65/home/tom/projects/netflix/src/js/components/Lolomo/LolomoRow.mjs1641949175910000000 0
 51/home/tom/projects/netflix/src/js/components/Lolomo1641949157230000000 1
 76/home/tom/projects/netflix/src/js/components/Carousel/CarouselSlideImage.mjs1641854553780000000 0
-66/home/tom/projects/netflix/src/js/components/Carousel/Carousel.mjs1641877615705892400 0
+66/home/tom/projects/netflix/src/js/components/Carousel/Carousel.mjs1641961466743360500 0
 72/home/tom/projects/netflix/src/js/components/Carousel/CarouselButton.mjs1641815898580463800 0
-71/home/tom/projects/netflix/src/js/components/Carousel/Carousel.test.mjs1641948822330000000 0
+71/home/tom/projects/netflix/src/js/components/Carousel/Carousel.test.mjs1641958955783360500 0
 71/home/tom/projects/netflix/src/js/components/Carousel/CarouselSlide.mjs1641854545250000000 0
 66/home/tom/projects/netflix/src/js/components/Navbar/NavbarLogo.mjs1641816042372000000 0
 79/home/tom/projects/netflix/src/js/components/Navbar/NavbarNavigationPrimary.mjs1641873537995892400 0
@@ -1878,7 +1879,7 @@
 93/home/tom/projects/netflix/node_modules/caniuse-lite/data/features/kerning-pairs-ligatures.js499162500000000000 0
 75/home/tom/projects/netflix/node_modules/caniuse-lite/data/features/xhtml.js499162500000000000 0
 82/home/tom/projects/netflix/node_modules/caniuse-lite/data/features/transforms2d.js499162500000000000 0
-67/home/tom/projects/netflix/src/js/components/Lolomo/Lolomo.test.mjs1641949299910000000 0
+67/home/tom/projects/netflix/src/js/components/Lolomo/Lolomo.test.mjs1641962152263360500 0
 85/home/tom/projects/netflix/node_modules/caniuse-lite/data/features/css-reflections.js499162500000000000 0
 80/home/tom/projects/netflix/node_modules/caniuse-lite/data/features/pdf-viewer.js499162500000000000 0
 73/home/tom/projects/netflix/node_modules/caniuse-lite/data/features/eot.js499162500000000000 0
@@ -2001,7 +2002,7 @@
 92/home/tom/projects/netflix/node_modules/caniuse-lite/data/features/form-submit-attributes.js499162500000000000 0
 79/home/tom/projects/netflix/node_modules/core-js/stable/instance/reduce-right.js499162500000000000 0
 83/home/tom/projects/netflix/node_modules/caniuse-lite/data/features/ambient-light.js499162500000000000 0
-76/home/tom/projects/netflix/src/js/components/Carousel/CarouselTrack.test.mjs1641948784480000000 0
+76/home/tom/projects/netflix/src/js/components/Carousel/CarouselTrack.test.mjs1641959171743360500 0
 86/home/tom/projects/netflix/node_modules/caniuse-lite/data/features/childnode-remove.js499162500000000000 0
 75/home/tom/projects/netflix/node_modules/caniuse-lite/data/features/video.js499162500000000000 0
 82/home/tom/projects/netflix/node_modules/caniuse-lite/data/features/css-overflow.js499162500000000000 0
@@ -2320,7 +2321,7 @@
 57/home/tom/projects/netflix/node_modules/timers-browserify1641167519050000000 1
 63/home/tom/projects/netflix/node_modules/acorn-globals/README.md1583641204000000000 0
 66/home/tom/projects/netflix/node_modules/acorn-globals/package.json1641849191230000000 0
-86/home/tom/projects/netflix/src/js/components/Navbar/NavbarNavigationSecondary.test.mjs1641853045820000000 0
+86/home/tom/projects/netflix/src/js/components/Navbar/NavbarNavigationSecondary.test.mjs1641959012273360500 0
 85/home/tom/projects/netflix/node_modules/acorn-globals/node_modules/acorn/CHANGELOG.md499162500000000000 0
 72/home/tom/projects/netflix/.cache/d9/aa0d6aa47755a73cd56f326370fbd9.json1641099623220000000 0
 84/home/tom/projects/netflix/node_modules/acorn-globals/node_modules/acorn/dist/bin.js499162500000000000 0
@@ -4318,7 +4319,7 @@
 73/home/tom/projects/netflix/node_modules/svgo/plugins/removeHiddenElems.js499162500000000000 0
 67/home/tom/projects/netflix/node_modules/svgo/plugins/removeTitle.js499162500000000000 0
 75/home/tom/projects/netflix/node_modules/svgo/plugins/removeScriptElement.js499162500000000000 0
-84/home/tom/projects/netflix/src/js/components/Navbar/NavbarNavigationPrimary.test.mjs1641852532700000000 0
+84/home/tom/projects/netflix/src/js/components/Navbar/NavbarNavigationPrimary.test.mjs1641959014173360500 0
 75/home/tom/projects/netflix/node_modules/svgo/plugins/removeEditorsNSData.js499162500000000000 0
 78/home/tom/projects/netflix/node_modules/svgo/plugins/addClassesToSVGElement.js499162500000000000 0
 83/home/tom/projects/netflix/node_modules/jsdom/lib/jsdom/living/generated/Element.js499162500000000000 0
@@ -4526,6 +4527,7 @@
 58/home/tom/projects/netflix/node_modules/error-ex/README.md1528764712000000000 0
 87/home/tom/projects/netflix/node_modules/htmlparser2/node_modules/entities/lib/generated1641167512700000000 1
 86/home/tom/projects/netflix/node_modules/hash-base/node_modules/readable-stream/LICENSE499162500000000000 0
+63/home/tom/projects/netflix/src/js/components/Main/Main.test.mjs1641962215073360500 0
 95/home/tom/projects/netflix/node_modules/core-js/features/reflect/get-own-property-descriptor.js499162500000000000 0
 93/home/tom/projects/netflix/node_modules/msgpackr-extract/prebuilds/win32-x64/node.abi102.node499162500000000000 0
 60/home/tom/projects/netflix/node_modules/word-wrap/index.d.ts1485788848000000000 0
@@ -5724,6 +5726,7 @@
 55/home/tom/projects/netflix/node_modules/isexe/README.md1490230327000000000 0
 66/home/tom/projects/netflix/node_modules/postcss-minify-font-values1641167519710000000 1
 64/home/tom/projects/netflix/node_modules/terser/tools/terser.d.ts499162500000000000 0
+67/home/tom/projects/netflix/spec/helpers/MockedLolomoRowCarousel.mjs1641961093053360500 0
 58/home/tom/projects/netflix/node_modules/domhandler/LICENSE499162500000000000 0
 78/home/tom/projects/netflix/node_modules/@parcel/diagnostic/lib/diagnostic.d.ts499162500000000000 0
 111/home/tom/projects/netflix/node_modules/uncss/node_modules/jsdom/lib/jsdom/living/svg/SVGAnimatedString-impl.js499162500000000000 0
@@ -6401,7 +6404,7 @@
 50/home/tom/projects/netflix/node_modules/terser/lib1641167511430000000 1
 92/home/tom/projects/netflix/node_modules/postcss-modules/node_modules/postcss/lib/tokenize.js499162500000000000 0
 54/home/tom/projects/netflix/node_modules/terser/main.js499162500000000000 0
-67/home/tom/projects/netflix/src/js/components/Navbar/Navbar.test.mjs1641878808085892400 0
+67/home/tom/projects/netflix/src/js/components/Navbar/Navbar.test.mjs1641959407903360500 0
 56/home/tom/projects/netflix/node_modules/es-abstract/20181641167514350000000 1
 81/home/tom/projects/netflix/node_modules/@parcel/reporter-dev-server/src/templates1641167507870000000 1
 79/home/tom/projects/netflix/node_modules/@babel/generator/lib/node/whitespace.js456789000000000000 0
@@ -11355,6 +11358,7 @@
 68/home/tom/projects/netflix/node_modules/es-abstract/5/MinFromTime.js499162500000000000 0
 106/home/tom/projects/netflix/node_modules/@babel/helper-compilation-targets/node_modules/semver/CHANGELOG.md499162500000000000 0
 70/home/tom/projects/netflix/node_modules/@parcel/watcher/src/Backend.cc499162500000000000 0
+53/home/tom/projects/netflix/spec/helpers/DummyData.mjs1641963659563360500 0
 90/home/tom/projects/netflix/node_modules/jsdom/lib/jsdom/living/generated/HTMLDivElement.js499162500000000000 0
 55/home/tom/projects/netflix/node_modules/sha.js/index.js1641167510080000000 0
 86/home/tom/projects/netflix/node_modules/@babel/helper-compilation-targets/package.json1641167519730000000 0
@@ -12756,7 +12760,7 @@
 81/home/tom/projects/netflix/node_modules/uncss/node_modules/postcss/lib/postcss.js499162500000000000 0
 86/home/tom/projects/netflix/node_modules/@parcel/transformer-js/lib/esmodule-helpers.js499162500000000000 0
 63/home/tom/projects/netflix/node_modules/astring/dist/astring.js499162500000000000 0
-70/home/tom/projects/netflix/src/js/components/Lolomo/LolomoRow.test.mjs1641956533043360500 0
+70/home/tom/projects/netflix/src/js/components/Lolomo/LolomoRow.test.mjs1641961478403360500 0
 67/home/tom/projects/netflix/node_modules/astring/dist/astring.min.js499162500000000000 0
 75/home/tom/projects/netflix/node_modules/core-js/stable/instance/includes.js499162500000000000 0
 71/home/tom/projects/netflix/node_modules/astring/dist/astring.min.js.map499162500000000000 0
@@ -13699,7 +13703,7 @@
 66/home/tom/projects/netflix/node_modules/lodash/fp/assignAllWith.js499162500000000000 0
 86/home/tom/projects/netflix/node_modules/caniuse-lite/data/features/cookie-store-api.js499162500000000000 0
 61/home/tom/projects/netflix/node_modules/lodash/fp/toNumber.js499162500000000000 0
-77/home/tom/projects/netflix/src/js/components/Carousel/CarouselSlideI.test.mjs1641941065220000000 0
+77/home/tom/projects/netflix/src/js/components/Carousel/CarouselSlideI.test.mjs1641959535673360500 0
 96/home/tom/projects/netflix/node_modules/uncss/node_modules/cssstyle/lib/properties/background.js499162500000000000 0
 61/home/tom/projects/netflix/node_modules/lodash/fp/assignIn.js499162500000000000 0
 57/home/tom/projects/netflix/node_modules/lodash/mapKeys.js499162500000000000 0
@@ -14480,7 +14484,7 @@
 68/home/tom/projects/netflix/node_modules/es-abstract/2021/ToUint16.js499162500000000000 0
 81/home/tom/projects/netflix/node_modules/core-js/stable/string/virtual/trim-end.js499162500000000000 0
 73/home/tom/projects/netflix/node_modules/es-abstract/2021/SameValueZero.js499162500000000000 0
-77/home/tom/projects/netflix/src/js/components/Navbar/NavbarNavigation.test.mjs1641854757340000000 0
+77/home/tom/projects/netflix/src/js/components/Navbar/NavbarNavigation.test.mjs1641959044683360500 0
 66/home/tom/projects/netflix/node_modules/es-abstract/2021/Invoke.js499162500000000000 0
 58/home/tom/projects/netflix/node_modules/lmdb-store/.github1641167514470000000 1
 74/home/tom/projects/netflix/node_modules/es-abstract/2021/IterableToList.js499162500000000000 0
@@ -14530,7 +14534,7 @@
 64/home/tom/projects/netflix/node_modules/es-abstract/2021/Call.js499162500000000000 0
 68/home/tom/projects/netflix/node_modules/es-abstract/2021/ToString.js499162500000000000 0
 74/home/tom/projects/netflix/node_modules/es-abstract/2021/StringToBigInt.js499162500000000000 0
-55/home/tom/projects/netflix/spec/helpers/DOMSettings.mjs1641947527270000000 0
+55/home/tom/projects/netflix/spec/helpers/DOMSettings.mjs1641958724633360500 0
 92/home/tom/projects/netflix/node_modules/uncss/node_modules/cssstyle/lib/properties/bottom.js499162500000000000 0
 78/home/tom/projects/netflix/node_modules/es-abstract/2021/InstanceofOperator.js499162500000000000 0
 71/home/tom/projects/netflix/node_modules/es-abstract/2021/DayFromYear.js499162500000000000 0
@@ -16897,7 +16901,7 @@
 69/home/tom/projects/netflix/node_modules/stream-browserify/test/buf.js499162500000000000 0
 59/home/tom/projects/netflix/node_modules/call-bind/README.md499162500000000000 0
 95/home/tom/projects/netflix/node_modules/uncss/node_modules/cssstyle/lib/properties/stopColor.js499162500000000000 0
-49/home/tom/projects/netflix/src/js/components/Main1641816034210463800 1
+49/home/tom/projects/netflix/src/js/components/Main1641962194493360500 1
 59/home/tom/projects/netflix/node_modules/lodash/fp/method.js499162500000000000 0
 103/home/tom/projects/netflix/node_modules/uncss/node_modules/cssstyle/lib/properties/borderBottomColor.js499162500000000000 0
 59/home/tom/projects/netflix/node_modules/fast-url-parser/src1641167512590000000 1
@@ -17045,7 +17049,7 @@
 109/home/tom/projects/netflix/node_modules/uncss/node_modules/jsdom/lib/jsdom/living/generated/HTMLPreElement.js499162500000000000 0
 72/home/tom/projects/netflix/node_modules/nanoid/url-alphabet/package.json499162500000000000 0
 112/home/tom/projects/netflix/node_modules/uncss/node_modules/jsdom/lib/jsdom/living/generated/PopStateEventInit.js499162500000000000 0
-39/home/tom/projects/netflix/spec/helpers1641851663500000000 1
+39/home/tom/projects/netflix/spec/helpers1641961741033360500 1
 73/home/tom/projects/netflix/node_modules/cssstyle/lib/properties/bottom.js499162500000000000 0
 107/home/tom/projects/netflix/node_modules/uncss/node_modules/jsdom/lib/jsdom/living/generated/MessageEvent.js499162500000000000 0
 65/home/tom/projects/netflix/node_modules/lodash/fp/assignInWith.js499162500000000000 0
@@ -17352,6 +17356,7 @@
 104/home/tom/projects/netflix/node_modules/uncss/node_modules/jsdom/lib/jsdom/living/events/UIEvent-impl.js499162500000000000 0
 90/home/tom/projects/netflix/node_modules/icss-utils/node_modules/postcss/lib/lazy-result.js499162500000000000 0
 113/home/tom/projects/netflix/node_modules/uncss/node_modules/jsdom/lib/jsdom/living/events/CompositionEvent-impl.js499162500000000000 0
+59/home/tom/projects/netflix/spec/helpers/MockedLolomoRow.mjs1641960503323360500 0
 78/home/tom/projects/netflix/node_modules/generic-names/.idea/inspectionProfiles1641167511520000000 1
 108/home/tom/projects/netflix/node_modules/uncss/node_modules/jsdom/lib/jsdom/living/events/CustomEvent-impl.js499162500000000000 0
 116/home/tom/projects/netflix/node_modules/uncss/node_modules/jsdom/lib/jsdom/living/events/PageTransitionEvent-impl.js499162500000000000 0
