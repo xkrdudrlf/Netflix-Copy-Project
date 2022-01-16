@@ -16,9 +16,9 @@ building it with Vanilla JS wihout any JS Framework like React.
 - HTML/CSS/Vanilla JS/Jasmine(Testing Framework)
 - Tried mocking the React framework with JS in terms of structure.
 
-## 2. Progress Log related to the project:
+## 2. Progress log
 
-#### 28/12/2021 ~ 3/1/2022
+### 28/12/2021 ~ 3/1/2022
 
 1. Rewrite the whole codebase ditching MVC structure
 
@@ -29,7 +29,7 @@ building it with Vanilla JS wihout any JS Framework like React.
 
    - Component/Main/Lolomo/Carousel/Detils/Footer
 
-#### 4/1/2022 ~ 12/1/2022
+### 4/1/2022 ~ 12/1/2022
 
 1.  Implemented Lazy loading image feature on Carousel Component using Intersection Observer API.
 
@@ -41,7 +41,7 @@ building it with Vanilla JS wihout any JS Framework like React.
 
     - Unit testing on Navbar/Carousel/Lolomo Done.
 
-#### 13/1/2022 ~ 18/1/2022
+### 13/1/2022 ~ 18/1/2022
 
 1. Finished unit tests on every Components using Jasmine
    - [Ongoing] Unit testing on Main/Details/App/Footer Done.
