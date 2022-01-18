@@ -1,31 +1,31 @@
 import Carousel from "./Carousel.mjs";
 import DummyData from "../../../../spec/helpers/DummyData.mjs";
 
-const carousel = new Carousel({
-  parentElement: document.createElement("div"),
-  state: {
-    className: "lolomo__row__carousel",
-    slidesData: DummyData.$slidesData,
-  },
-});
-const carouselButtons =
-  carousel.$currElement.querySelectorAll(".carousel__button");
-const carouselTrack = carousel.$currElement.querySelector(".carousel__track");
-
-const carouselSlide = carousel.$currElement.querySelector(".carousel__slide");
-const carouselSlideModal = carouselSlide.querySelector(
-  ".carousel__slide__modal"
-);
-
-const mouseClickEvent = new window.MouseEvent("click", { bubbles: true });
-const mouseOverEvent = new window.MouseEvent("mouseover", {
-  bubbles: true,
-});
-const mouseOutEvent = new window.MouseEvent("mouseout", {
-  bubbles: true,
-});
-
 describe("Carousel", function () {
+  const carousel = new Carousel({
+    parentElement: document.createElement("div"),
+    state: {
+      className: "lolomo__row__carousel",
+      slidesData: DummyData.$slidesData,
+    },
+  });
+  const carouselButtons =
+    carousel.$currElement.querySelectorAll(".carousel__button");
+  const carouselTrack = carousel.$currElement.querySelector(".carousel__track");
+
+  const carouselSlide = carousel.$currElement.querySelector(".carousel__slide");
+  const carouselSlideModal = carouselSlide.querySelector(
+    ".carousel__slide__modal"
+  );
+
+  const mouseClickEvent = new window.MouseEvent("click", { bubbles: true });
+  const mouseOverEvent = new window.MouseEvent("mouseover", {
+    bubbles: true,
+  });
+  const mouseOutEvent = new window.MouseEvent("mouseout", {
+    bubbles: true,
+  });
+
   it("should have 3 children componenets: 2 Buttons, Track", function () {
     expect(carouselButtons.length).toBe(2);
     expect(carouselTrack).not.toBeNull();

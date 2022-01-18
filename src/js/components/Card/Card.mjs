@@ -6,7 +6,6 @@ export default class Card extends Component {
 
     this.$currElement = document.createElement("div");
     this.$currElement.className = `card ${this.$state.className}`;
-
     this.render();
   }
 

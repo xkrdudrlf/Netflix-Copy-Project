@@ -54,7 +54,6 @@ export default class App extends Component {
     }
 
     const activeTab = decodeURI(window.location.pathname.split("/")[1]);
-
     return activeTab;
   }
 
