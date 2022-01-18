@@ -43,5 +43,5 @@ building it with Vanilla JS wihout any JS Framework like React.
 
 ### 13/1/2022 ~ 18/1/2022
 
-1. Finished unit tests on every Components using Jasmine
-   - [Ongoing] Unit testing on Main/Details/App/Footer Done.
+1. Finished Unit Testings on every Component using Jasmine
+   - Unit testing on Main/Details/App Done.
