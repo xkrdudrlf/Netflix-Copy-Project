@@ -1,3 +1,5 @@
+export const SERVER_URL = "http://127.0.0.1:8000";
+
 export const THE_MOVIE_DB_URL = "https://api.themoviedb.org/3";
 export const THE_MOVIE_DB_API_KEY = "de088b40ef657d3aadc907af18e76ae1";
 export const THE_MOVIE_DB_IMAGE_URL = "https://image.tmdb.org/t/p/w300";

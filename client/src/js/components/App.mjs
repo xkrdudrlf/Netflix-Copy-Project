@@ -1,4 +1,5 @@
 import Component from "./Component/Component.mjs";
+import Login from "./Login/Login.mjs";
 import Navbar from "./Navbar/Navbar.mjs";
 import Main from "./Main/Main.mjs";
 import Footer from "./Footer/Footer.mjs";
@@ -15,7 +16,18 @@ export default class App extends Component {
 
   render() {
     this.$currElement.innerHTML = "";
+    // Check if the user is logged in or not
+    let token = localStorage.getItem("token");
+    if (!token) {
+      history.pushState("", "", "/Login");
+      const login = new Login({
+        parentElement: this.$currElement,
+      });
 
+      return;
+    }
+
+    // If so, render the right page for the user
     this.$state.activeTab = this.getActiveTab();
     this.$state.content = this.getContent(this.$state.activeTab);
 
