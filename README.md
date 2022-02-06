@@ -15,13 +15,17 @@ building it with Vanilla JS wihout any JS Framework like React.
 
 ### Server(./server)
 
-    [Do this only the first time you run the server]
+    Server is deployed here:
+      https://takflix-server.herokuapp.com/
+
+    If you want to run the server locally, you can do this as follows:
+    [Do this only for the first time you run the server]
     1. python3 -m venv .venv
-    2. pip install flask flask_pymongo Flask-JWT-Extended Flask-RESTful marshmellow
+    2. pip install -r requirements.txt
 
     [After the above, everytime you run the server]
     1. source .venv/bin/activate
-    2. python3 app.py
+    2. python3 wsgi.py
 
 ## 1. Tech Stack
 
@@ -31,7 +35,7 @@ building it with Vanilla JS wihout any JS Framework like React.
 - Backend:
   - Python Flask with MongoDB
 
-## 2. Progress log
+## 2. Progression Log
 
 ### 28/12/2021 ~ 3/1/2022
 
@@ -81,6 +85,7 @@ building it with Vanilla JS wihout any JS Framework like React.
     - CRUD operations on User Resource have been implemented
     - Server sends back valid JWT to a client upon successful auth request.
     - Server checks the existence or validity of JWT on certain requests(Update bookmark info, Get user info)
+  - Server has been deployed using Heroku
 - To do:
   1. Signup Page needs to be implemented
-  2. Both the server and client need to be deployed
+  2. After finishing 2, the client needs to be deployed
