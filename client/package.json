@@ -2,7 +2,7 @@
   "name": "netflix",
   "version": "1.0.0",
   "description": "Let's copy netflix",
-  "default": "index.html",
+  "main": "index.js",
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html --dist-dir ./dist",
