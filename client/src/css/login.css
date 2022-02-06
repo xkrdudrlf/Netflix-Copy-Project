@@ -73,3 +73,11 @@
 .login-form .login-signup-message .login-signup-link {
   color: red;
 }
+
+.login-error-message {
+  display: none;
+  padding: 0px 5px 0px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  color: white;
+}

@@ -5,7 +5,7 @@ from server import db
 class UserSchema(Schema):
     email = fields.Email(required=True)
     password = fields.Str(required=True)
-    favourites = fields.List(fields.Number())
+    bookmarks = fields.List(fields.Dict())
 
     @validates("email")
     def validate_email(self, value):

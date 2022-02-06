@@ -26,29 +26,56 @@ export default class LolomoRowCarousel extends Component {
   async prepareDataState() {
     this.$state.slidesData = [];
 
+    const bookmarks = Component.context["user"]["bookmarks"];
+
     const data = await this.fetchData();
     data.results.forEach((result) => {
       if (result.backdrop_path) {
+        const genre = result.original_title ? "movie" : "tv";
         const slideData = {
           id: result.id,
-          genre: result.original_title ? "movie" : "tv",
+          genre,
           slideImage: result.backdrop_path,
           slideModalContentHTML: `
             <div class="title">
               ${result.original_title ?? result.original_name}  
             </div>
-            <div class="rating">${result.adult ? "Adult" : "All"}</div>
+            <div class="options">
+              <div class="rating">
+                ${result.adult ? "Adult" : "All"}
+              </div>
+              <i 
+                class="${
+                  bookmarks.find(
+                    (bm) => bm.genre === genre && bm.id == result.id
+                  )
+                    ? "fas"
+                    : "far"
+                } 
+                fa-bookmark bookmark"
+              ></i>
+            </div>
             <ul class="genre-list">
-              ${result.genre_ids
-                .slice(0, 3)
-                .map((genreId) => {
-                  return `
+              ${
+                this.$state.category === "my_list"
+                  ? result.genres.map((g) => {
+                      return `
+                      <li class="genre">
+                        ${g["name"]}
+                      </li>
+                    `;
+                    })
+                  : result.genre_ids
+                      .slice(0, 3)
+                      .map((genreId) => {
+                        return `
                     <li class="genre">
                       ${config.GENRE_HASHTABLE[genreId]}
                     </li>
                   `;
-                })
-                .join("")}
+                      })
+                      .join("")
+              }
             </ul>
           `,
         };
@@ -91,6 +118,27 @@ export default class LolomoRowCarousel extends Component {
         case "now_playing": {
           requestURL = `/movie/${this.$state.category}`;
           data = await utils.request(requestURL);
+          break;
+        }
+        case "my_list": {
+          const bookmarkFetchPromises = [];
+          const bookmarks = Component.context["user"]["bookmarks"];
+          bookmarks.forEach(async (bookmark) => {
+            bookmarkFetchPromises.push(
+              utils.request(`/${bookmark["genre"]}/${bookmark["id"]}`)
+            );
+          });
+          const bookmarkFetchedData = await Promise.allSettled(
+            bookmarkFetchPromises
+          );
+
+          data.results = [];
+          bookmarkFetchedData.forEach((bookmarkData) => {
+            if (bookmarkData.status === "fulfilled") {
+              data.results.push(bookmarkData.value);
+            }
+          });
+
           break;
         }
       }

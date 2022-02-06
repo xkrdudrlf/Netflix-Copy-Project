@@ -12,8 +12,4 @@ describe("NavbarSecondary", function () {
       "navbar__navigation__secondary"
     );
   });
-
-  it("should have 4 elements", function () {
-    expect(navbarElements.length).toBe(4);
-  });
 });

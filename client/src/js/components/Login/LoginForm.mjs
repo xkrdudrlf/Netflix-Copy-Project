@@ -10,6 +10,7 @@ export default class LoginForm extends Component {
     this.$currElement.className = "login-form";
 
     this.render();
+
     this.addHandlerFormSubmit();
   }
 
@@ -32,6 +33,10 @@ export default class LoginForm extends Component {
     passwordInput.placeholder = "Please enter password";
     passwordInput.autocomplete = true;
 
+    const loginErrorMessage = document.createElement("div");
+    loginErrorMessage.className = "login-error-message";
+    loginErrorMessage.textContent = "Error: Incorrect password or email";
+
     const submitButton = document.createElement("button");
     submitButton.className = "login-submit-button";
     submitButton.textContent = "Sign in";
@@ -46,32 +51,43 @@ export default class LoginForm extends Component {
     signupLink.textContent = "Sign up now";
     signupMessage.appendChild(signupLink);
 
-    [title, emailInput, passwordInput, submitButton, signupMessage].forEach(
-      (el) => {
-        this.$currElement.appendChild(el);
-      }
-    );
+    [
+      title,
+      emailInput,
+      passwordInput,
+      loginErrorMessage,
+      submitButton,
+      signupMessage,
+    ].forEach((el) => {
+      this.$currElement.appendChild(el);
+    });
 
     this.$parentElement.appendChild(this.$currElement);
   }
 
   addHandlerFormSubmit() {
-    this.$currElement.addEventListener("submit", (e) => {
+    this.$currElement.addEventListener("submit", async (e) => {
       e.preventDefault();
       const userInfo = {};
       const inputs = e.target.querySelectorAll("input");
       inputs.forEach((input) => {
         userInfo[input.name] = input.value;
       });
-      fetch(
+
+      const response = await fetch(
         `${SERVER_URL}/auth?email=${userInfo["email"]}&password=${userInfo["password"]}`
-      )
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => {
-          console.log(data);
-        });
+      );
+      const data = await response.json();
+
+      if (response.status === 200) {
+        localStorage.setItem("access-token", data.Token);
+        window.location.replace("/Home");
+      } else {
+        const loginErrorMessage = this.$currElement.querySelector(
+          ".login-error-message"
+        );
+        loginErrorMessage.style.display = "block";
+      }
     });
   }
 }

@@ -114,13 +114,29 @@
   font-weight: bold;
 }
 
-.carousel__slide__modal__body .rating {
+.carousel__slide__modal__body .options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.carousel__slide__modal__body .options .rating {
   display: inline-block;
   width: auto;
   border: 0.5px rgba(245, 245, 245, 0.637) solid;
   border-radius: 5px;
   padding: 0px 6px;
   margin: 5px 0;
+  margin-right: 10px;
+}
+
+.carousel__slide__modal__body .options i {
+  transition: all 0.3s ease-in-out;
+}
+.carousel__slide__modal__body .options i:hover {
+  font-size: 2rem;
 }
 
 .carousel__slide__modal__body .genre-list {

@@ -50,6 +50,8 @@ export default class Lolomo extends Component {
         genre = "all";
         break;
       case "My List":
+        categories = ["my_list"];
+        genre = "all";
         break;
     }
 

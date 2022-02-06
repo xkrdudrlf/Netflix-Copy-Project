@@ -14,6 +14,7 @@ export default class Navbar extends Component {
     this.render();
 
     this.addHandlerNavbarTabClick();
+    this.addHandlerLogout();
   }
 
   render() {
@@ -47,6 +48,17 @@ export default class Navbar extends Component {
       const nextState = { additionalInformation: "Updated the URL with JS" };
 
       utils.pushState(nextState, nextTitle, nextURL, target);
+    });
+  }
+
+  addHandlerLogout() {
+    this.$currElement.addEventListener("click", (e) => {
+      if (!e.target.classList.contains("signout")) return;
+
+      localStorage.removeItem("access-token");
+      Component.context.user = undefined;
+
+      window.location.replace("/Login");
     });
   }
 }

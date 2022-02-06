@@ -1,3 +1,4 @@
+import { SERVER_URL } from "../../config.mjs";
 import * as utils from "../../utils.mjs";
 
 import Component from "../Component/Component.mjs";
@@ -81,15 +82,57 @@ export default class Carousel extends Component {
       const currSlide = e.target.closest(".carousel__slide");
       if (!currSlide) return;
 
+      const { genre, id } = currSlide.dataset;
+
+      // Bookmark click
+      if (e.target.classList.contains("bookmark")) {
+        const isBookmarked = e.target.classList.contains("fas");
+        if (isBookmarked) {
+          e.target.classList.remove("fas");
+          e.target.classList.add("far");
+          this.sendBookmarkRequest(genre, id, false);
+          Component.context["user"]["bookmarks"] = Component.context["user"][
+            "bookmarks"
+          ].filter((bm) => bm.genre !== genre || bm.id != id);
+        } else {
+          e.target.classList.remove("far");
+          e.target.classList.add("fas");
+          this.sendBookmarkRequest(genre, id, true);
+          Component.context["user"]["bookmarks"].push({
+            genre,
+            id,
+          });
+        }
+        return;
+      }
+
       // Change URL
-      const nextURL = `/${currSlide.dataset.genre}/${currSlide.dataset.id}`;
+      const nextURL = `/${genre}/${id}`;
       const nextTitle = `${utils.capitalizeFirstCharacter(
-        currSlide.dataset.genre
+        genre
       )} details - Netflix`;
       const nextState = { additionalInformation: "Updated the URL with JS" };
       const target = document.querySelector(".app");
 
       utils.pushState(nextState, nextTitle, nextURL, target);
+    });
+  }
+
+  sendBookmarkRequest(genre, id, bookmarkStatus) {
+    const token = localStorage.getItem("access-token");
+    const data = {
+      genre,
+      id,
+      status: bookmarkStatus,
+    };
+
+    fetch(`${SERVER_URL}/bookmark`, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     });
   }
 

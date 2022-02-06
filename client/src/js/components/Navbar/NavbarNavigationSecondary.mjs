@@ -22,22 +22,9 @@ export default class NavbarSecondary extends Component {
   createNavbarElements() {
     const navbarElements = [];
 
-    const search = document.createElement("i");
-    search.className = "navbar__element fas fa-search";
-    navbarElements.push(search);
-
-    const kids = document.createElement("li");
-    kids.className = "navbar__element show-kids";
-    kids.textContent = "Kids";
-    navbarElements.push(kids);
-
-    const notification = document.createElement("i");
-    notification.className = "navbar__element fas fa-bell";
-    navbarElements.push(notification);
-
-    const user = document.createElement("i");
-    user.className = "navbar__element fas fa-user";
-    navbarElements.push(user);
+    const logout = document.createElement("i");
+    logout.className = "navbar__element signout fas fa-sign-out-alt";
+    navbarElements.push(logout);
 
     return navbarElements;
   }

@@ -26,33 +26,3 @@ export default class Login extends Component {
     this.$parentElement.appendChild(this.$currElement);
   }
 }
-
-/*
-  <div class="login">
-    <div class="login__header">
-      <div class="logo"></div>
-    </div>
-    <div class="login__body">
-      <div class="login-form">
-        <div class="login-title">Sign in</div>
-        <input
-          class="login-field-container login-input-email"
-          type="email"
-          name="email"
-          placeholder="Enter email"
-        />
-        <input
-          class="login-field-container login-input-password"
-          type="password"
-          name="password"
-          placeholder="Enter password"
-        />
-        <button class="login-submit-button">Sign in</button>
-        <div class="login-signup-message">
-          New to Takflix?
-          <a class="login-signup-link" href="/signup">Sign up now</a>
-        </div>
-      </div>
-    </div>
-  </div>
-*/

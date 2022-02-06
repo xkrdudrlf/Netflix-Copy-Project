@@ -3,6 +3,7 @@ import Login from "./Login/Login.mjs";
 import Navbar from "./Navbar/Navbar.mjs";
 import Main from "./Main/Main.mjs";
 import Footer from "./Footer/Footer.mjs";
+import { SERVER_URL } from "../config.mjs";
 
 export default class App extends Component {
   constructor(componentInfo) {
@@ -14,20 +15,21 @@ export default class App extends Component {
     this.addHandlerRoute();
   }
 
-  render() {
+  async render() {
     this.$currElement.innerHTML = "";
-    // Check if the user is logged in or not
-    let token = localStorage.getItem("token");
-    if (!token) {
+
+    const user = await this.getUser();
+    if (!user) {
       history.pushState("", "", "/Login");
-      const login = new Login({
+
+      new Login({
         parentElement: this.$currElement,
       });
 
       return;
     }
 
-    // If so, render the right page for the user
+    Component.context["user"] = user;
     this.$state.activeTab = this.getActiveTab();
     this.$state.content = this.getContent(this.$state.activeTab);
 
@@ -71,5 +73,22 @@ export default class App extends Component {
 
   getContent(activeTab) {
     return activeTab === "tv" || activeTab === "movie" ? "details" : "lolomo";
+  }
+
+  async getUser() {
+    const token = localStorage.getItem("access-token");
+    if (!token) return;
+
+    const response = await fetch(`${SERVER_URL}/user`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+
+    if (response.status !== 200) return false;
+
+    const user = await response.json();
+
+    return user;
   }
 }

@@ -1,4 +1,5 @@
 export default class Component {
+  static context = {};
   $parentElement;
   $currElement;
   $childrenElements = [];

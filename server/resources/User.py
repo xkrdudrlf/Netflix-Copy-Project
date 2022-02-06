@@ -1,5 +1,7 @@
 from flask import request
 from flask_restful import Resource
+
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from marshmallow import ValidationError
 
 from model.User import UserSchema
@@ -8,11 +10,10 @@ from server import db
 
 class User(Resource):
     schema = UserSchema()
-
+    @jwt_required()
     def get(self):
         try:
-            user = request.get_json()
-            email = user['email']
+            email = get_jwt_identity()
             user = db.users.find_one({"email": email})
             if not user:
                 return {'message': f'user with {email} as email does not exist'}, 404
