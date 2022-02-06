@@ -68,6 +68,7 @@ export default class LoginForm extends Component {
   addHandlerFormSubmit() {
     this.$currElement.addEventListener("submit", async (e) => {
       e.preventDefault();
+      console.log("submitted!");
       const userInfo = {};
       const inputs = e.target.querySelectorAll("input");
       inputs.forEach((input) => {
