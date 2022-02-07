@@ -41,15 +41,24 @@ export default class LoginForm extends Component {
     submitButton.className = "login-submit-button";
     submitButton.textContent = "Sign in";
 
-    const signupMessage = document.createElement("div");
-    signupMessage.className = "login-signup-message";
-    signupMessage.textContent = "New to Takflix? ";
+    const loginInfoBox = document.createElement("div");
+    loginInfoBox.className = "login-info-box";
+    loginInfoBox.innerHTML = `
+      <p>Signup feature is under construction.</p>
+      <p>Please use the following login info:</p>
+      <p>ID: y0unggil0919@gmail.com</p>
+      <p>PW: abcd1234 </p>
+    `;
 
-    const signupLink = document.createElement("a");
-    signupLink.className = "login-signup-link";
-    signupLink.href = "/signup";
-    signupLink.textContent = "Sign up now";
-    signupMessage.appendChild(signupLink);
+    // const signupMessage = document.createElement("div");
+    // signupMessage.className = "login-signup-message";
+    // signupMessage.textContent = "New to Takflix? ";
+
+    // const signupLink = document.createElement("a");
+    // signupLink.className = "login-signup-link";
+    // signupLink.href = "/signup";
+    // signupLink.textContent = "Sign up now";
+    // signupMessage.appendChild(signupLink);
 
     [
       title,
@@ -57,7 +66,7 @@ export default class LoginForm extends Component {
       passwordInput,
       loginErrorMessage,
       submitButton,
-      signupMessage,
+      loginInfoBox,
     ].forEach((el) => {
       this.$currElement.appendChild(el);
     });
@@ -68,7 +77,6 @@ export default class LoginForm extends Component {
   addHandlerFormSubmit() {
     this.$currElement.addEventListener("submit", async (e) => {
       e.preventDefault();
-      console.log("submitted!");
       const userInfo = {};
       const inputs = e.target.querySelectorAll("input");
       inputs.forEach((input) => {
