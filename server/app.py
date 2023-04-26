@@ -18,7 +18,8 @@ jwt = JWTManager(app)
 
 @app.after_request
 def after_request_func(response):
-    response.headers.add('Access-Control-Allow-Origin', '*')
+    # response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Origin', 'https://takflix.netlify.app')
     response.headers.add('Access-Control-Allow-Methods',
                          'GET, POST, OPTIONS, PUT, PATCH, DELETE')
     response.headers.add('Access-Control-Allow-Headers',
